@@ -78,6 +78,23 @@ services:
       - PGID=${PGID:-1000}
       - TZ=${TZ:-America/Denver}
 
+  ###
+  #  tautulli - Utilities for Plex
+  ###  
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulli
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${GUID:-1000}
+      - GUID=${GUID:-1000} 
+      - TZ=$={TZ:-America/Denver}
+    volumes:
+      - ${DOCKER_DIR}/tautulli/config/:/config/
+    ports:
+      - 8181:8181
+    restart: unless-stopped
+
 ###
 # System Volumes
 ###
