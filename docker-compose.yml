@@ -52,7 +52,7 @@ services:
       - GUID=${GUID:-1000}
       - PGID=${PGID:-1000}
       - TZ=${TZ:-America/Denver}
-      - PMM_CONFIG=${PMM_CONFIG:-config/config.yml} #optional
+      - PMM_CONFIG=${PMM_CONFIG:-/config/config.yml} #optional
       - PMM_TIME=${PMM_TIME:-03:00} #optional
       - PMM_RUN=${PMM_RUN:-False} #optional
       - PMM_TEST=${PMM_TEST:-False} #optional

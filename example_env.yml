@@ -20,8 +20,8 @@ PMM_TEST=False #optional
 PMM_NO_MISSING=False #optional
 
 # TMDB credentials
-TMDB_TOKEN=6f12d86dc75442a5ee326ba865258f2f
+TMDB_TOKEN=<the movie database token>
 
 # Trakt login credentials
-TRAKT_CLIENT_ID=346e2373e5105f4fb58354174911fe4190082d1dbe97c5bb9a6b7fe892d96609
-TRAKT_CLIENT_SECRET=29f4009fee350be866de7b68c2a8b02e913e03741ccdff0239ffecc7b72764e6
+TRAKT_CLIENT_ID=<trakt client ID from trakt site>
+TRAKT_CLIENT_SECRET=<trakt secret key from the trakt site>
