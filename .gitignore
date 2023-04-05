@@ -202,5 +202,9 @@ MigrationBackup/
 # Metalog files
 *.log
 *.log.*
-No movie posters
+# No movie posters
 plex_meta_manager/config/overlays/Movies*
+UUID
+
+#tautulli
+config.ini

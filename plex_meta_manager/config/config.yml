@@ -77,28 +77,28 @@ webhooks:                        # Can be individually specified per library as 
   changes:
 plex:                            # Can be individually specified per library as well; REQUIRED for the script to run
   url: http://10.0.0.223:32400
-  token: ####################
+  token: ${PLEX_TOKEN:-xxxxxxxxxxxx}
   timeout: 60
   clean_bundles: true
   empty_trash: true
   optimize: true
 tmdb:                            # REQUIRED for the script to run
-  apikey: ################################
+  apikey: ${TMDB_TOKEN:-xxxxxxxxxx}
   language: en
 tautulli:                        # Can be individually specified per library as well
-  url: http://192.168.1.12:8181
-  apikey: ################################
-omdb:
-  apikey: ########
-  cache_expiration: 60
-mdblist:
-  apikey: #########################
-  cache_expiration: 60
-notifiarr:
-  apikey: ####################################
-anidb:                           # Not required for AniDB builders unless you want mature content
-  username: ######
-  password: ######
+  url: http://10.0.0.223:8181
+  apikey: ${TAUTULLI_API_TOKEN:-XXXXXXXXXX}
+#omdb:
+#  apikey: ########
+#  cache_expiration: 60
+#mdblist:
+#  apikey: #########################
+#  cache_expiration: 60
+#notifiarr:
+#  apikey: ####################################
+#anidb:                           # Not required for AniDB builders unless you want mature content
+#  username: ######
+#  password: ######
 radarr:                          # Can be individually specified per library as well
   url: http://192.168.1.12:7878
   token: ################################
@@ -129,8 +129,8 @@ sonarr:                          # Can be individually specified per library as 
   sonarr_path:
   plex_path:
 trakt:
-  client_id: ####################
-  client_secret: ####################
+  client_id: ${TRAKT_CLIENT_ID:-####################}
+  client_secret: ${TRAKT_CLIENT_SECRET:-####################}
   pin:
   authorization:
     # everything below is autofilled by the script
@@ -140,12 +140,12 @@ trakt:
     refresh_token:
     scope: public
     created_at:
-mal:
-  client_id: ####################
-  client_secret: ####################
-  authorization:
-    # everything below is autofilled by the script
-    access_token:
-    token_type:
-    expires_in:
-    refresh_token:
+#mal:
+#  client_id: ####################
+#  client_secret: ####################
+#  authorization:
+#    # everything below is autofilled by the script
+#    access_token:
+#    token_type:
+#    expires_in:
+#    refresh_token:
