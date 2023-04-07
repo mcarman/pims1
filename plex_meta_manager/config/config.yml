@@ -3,34 +3,34 @@
 libraries:                       # This is called out once within the config.yml file
   Movies:                        # These are names of libraries in your Plex
     metadata_path:
-      - pmm: basic               # This is a file within PMM's defaults folder
-      - pmm: imdb                # This is a file within PMM's defaults folder
+    - pmm: basic                 # This is a file within PMM's defaults folder
+    - pmm: imdb                  # This is a file within PMM's defaults folder
       # see the wiki for how to use local files, folders, URLs, or files from git
-      - file: metadata/movies/charts.yml
-      - file: metadata/movies/Movies.yml
+    - file: metadata/movies/charts.yml
+    - file: metadata/movies/Movies.yml
     overlay_path:
-      - remove_overlays: false   # Set this to true to remove all overlays
-      - pmm: ribbon              # This is a file within PMM's defaults folder
+    - remove_overlays: false     # Set this to true to remove all overlays
+    - pmm: ribbon                # This is a file within PMM's defaults folder
       # see the wiki for how to use local files, folders, URLs, or files from git
   TV Shows:
     metadata_path:
-      - pmm: basic               # This is a file within PMM's defaults folder
-      - pmm: imdb                # This is a file within PMM's defaults folder
+    - pmm: basic                 # This is a file within PMM's defaults folder
+    - pmm: imdb                  # This is a file within PMM's defaults folder
       # see the wiki for how to use local files, folders, URLs, or files from git
     overlay_path:
-      - remove_overlays: false   # Set this to true to remove all overlays
-      - pmm: ribbon              # This is a file within PMM's defaults folder
+    - remove_overlays: false     # Set this to true to remove all overlays
+    - pmm: ribbon                # This is a file within PMM's defaults folder
       # see the wiki for how to use local files, folders, URLs, or files from git
   Anime:
     metadata_path:
-      - pmm: basic               # This is a file within PMM's defaults folder
-      - pmm: anilist             # This is a file within PMM's defaults folder
+    - pmm: basic                 # This is a file within PMM's defaults folder
+    - pmm: anilist               # This is a file within PMM's defaults folder
       # see the wiki for how to use local files, folders, URLs, or files from git
 #  Music:
 #    metadata_path:
 #      - file: config/Music.yml   # This is a local file THAT YOU MIGHT CREATE
 playlist_files:
-  - pmm: playlist                # This is a file within PMM's defaults folder
+- pmm: playlist                  # This is a file within PMM's defaults folder
   # see the wiki for how to use local files, folders, URLs, or files from git
 settings:
   cache: true
@@ -69,12 +69,15 @@ settings:
   verify_ssl: true
   custom_repo:
   check_nightly: false
+  show_unconfigured: true
+  playlist_exclude_users:
 webhooks:                        # Can be individually specified per library as well
   error:
   version:
   run_start:
   run_end:
   changes:
+  delete:
 plex:                            # Can be individually specified per library as well; REQUIRED for the script to run
   url: http://10.0.0.223:32400
   token: ${PLEX_TOKEN:-xxxxxxxxxxxx}
@@ -85,6 +88,7 @@ plex:                            # Can be individually specified per library as 
 tmdb:                            # REQUIRED for the script to run
   apikey: ${TMDB_TOKEN:-xxxxxxxxxx}
   language: en
+  cache_expiration: 60
 tautulli:                        # Can be individually specified per library as well
   url: http://10.0.0.223:8181
   apikey: ${TAUTULLI_API_TOKEN:-XXXXXXXXXX}
@@ -117,7 +121,7 @@ sonarr:                          # Can be individually specified per library as 
   token: ################################
   add_missing: false
   add_existing: false
-  root_folder_path: "S:/TV Shows"
+  root_folder_path: S:/TV Shows
   monitor: all
   quality_profile: HD-1080p
   language_profile: English

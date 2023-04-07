@@ -79,6 +79,8 @@ services:
       - GUID=${GUID:-1000}
       - PGID=${PGID:-1000}
       - TZ=${TZ:-America/Denver}
+    # ports:
+      # - 
 
   ###
   #  tautulli - Utilities for Plex
