@@ -5,12 +5,57 @@ libraries:                       # This is called out once within the config.yml
     metadata_path:
     - pmm: basic                 # This is a file within PMM's defaults folder
     - pmm: imdb                  # This is a file within PMM's defaults folder
+    - pmm: separator_award                          # An "index card"
+    - pmm: bafta                                    # BAFTA Awards
+      template_variables:                           # based on when the award show started
+        data:
+          starting: 2010
+          ending: current_year
+    - pmm: cannes                                   # Cannes Film Festival Awards
+      template_variables:                           # based on when the award show started
+        data:
+          starting: 2010
+          ending: current_year
+    - pmm: choice                                   # Critic's Choice Awards
+      template_variables:                           # based on when the award show started
+        data:
+          starting: 2010
+          ending: current_year
+    - pmm: golden                                   # Golden Globes Awards
+      template_variables:                           # based on when the award show started
+        data:
+          starting: 1943
+          ending: current_year
+    - pmm: oscars                                   # The Oscars
+      template_variables:                           # based on when the award show started
+        data:
+          starting: 1927
+          ending: current_year
+    - pmm: other_award                              # Other award collections
+    - pmm: spirit                                   # Independent Spirit Awards
+      template_variables:                           # based on when the award show started
+        data:
+          starting: 2010
+          ending: current_year
+    - pmm: sundance                                 # Sundance Film Festival Awards
+      template_variables:                           # based on when the award show started
+        data:
+          starting: 2010
       # see the wiki for how to use local files, folders, URLs, or files from git
     - file: metadata/movies/charts.yml
     - file: metadata/movies/Movies.yml
+    - file: metadata/movies/collections.yml
     overlay_path:
-    - remove_overlays: false     # Set this to true to remove all overlays
-    - pmm: ribbon                # This is a file within PMM's defaults folder
+      - remove_overlays: false     # Set this to true to remove all overlays
+      - pmm: ribbon                # This is a file within PMM's defaults folder
+      - pmm: ratings:
+          rating1: audience
+          rating2: critic
+          rating1_image: rt_tomato
+          rating2_image: metacritic
+    operations:
+      mass_critic_rating_update: imdb
+      mass_audience_rating_update: mdb_tomatoesaudience
       # see the wiki for how to use local files, folders, URLs, or files from git
   TV Shows:
     metadata_path:
@@ -18,8 +63,24 @@ libraries:                       # This is called out once within the config.yml
     - pmm: imdb                  # This is a file within PMM's defaults folder
       # see the wiki for how to use local files, folders, URLs, or files from git
     overlay_path:
-    - remove_overlays: false     # Set this to true to remove all overlays
-    - pmm: ribbon                # This is a file within PMM's defaults folder
+      - remove_overlays: false     # Set this to true to remove all overlays
+      - pmm: ribbon                # This is a file within PMM's defaults folder
+      - pmm: ratings
+        template_variables:
+          rating1: audience
+          rating2: critic
+          rating1_image: rt_tomato
+          rating2_image: metacritic
+      - pmm: ratings
+        template_variables:
+          overlay_level: episode
+          rating1: audience
+          rating2: critic
+          rating1_image: rt_tomato
+          rating2_image: metacritic
+    operations:
+      mass_critic_rating_update: imdb
+      mass_audience_rating_update: mdb_tomatoesaudience
       # see the wiki for how to use local files, folders, URLs, or files from git
   Anime:
     metadata_path:
@@ -80,26 +141,26 @@ webhooks:                        # Can be individually specified per library as 
   delete:
 plex:                            # Can be individually specified per library as well; REQUIRED for the script to run
   url: http://10.0.0.223:32400
-  token: ${PLEX_TOKEN:-xxxxxxxxxxxx}
+  token: ${PLEX_TOKEN}
   timeout: 60
   clean_bundles: true
   empty_trash: true
   optimize: true
 tmdb:                            # REQUIRED for the script to run
-  apikey: ${TMDB_TOKEN:-xxxxxxxxxx}
+  apikey: ${TMDB_TOKEN}
   language: en
   cache_expiration: 60
 tautulli:                        # Can be individually specified per library as well
   url: http://10.0.0.223:8181
-  apikey: ${TAUTULLI_API_TOKEN:-XXXXXXXXXX}
+  apikey: ${TAUTULLI_API_TOKEN}
 #omdb:
 #  apikey: ########
 #  cache_expiration: 60
-#mdblist:
-#  apikey: #########################
-#  cache_expiration: 60
-#notifiarr:
-#  apikey: ####################################
+mdblist:
+  apikey: ${MDBLIST_API_TOKEN}
+  cache_expiration: 60
+notifiarr:
+  apikey: ${NOTIFIARR_TOKEN}
 #anidb:                           # Not required for AniDB builders unless you want mature content
 #  username: ######
 #  password: ######
