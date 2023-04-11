@@ -104,6 +104,24 @@ services:
     restart: unless-stopped
 
 ###
+# Heimdahl
+###
+  heimdahl: 
+    image: lscr.io/linuxserver/heimdall
+    container_name: heimdall
+    ports:
+      - 8010:80
+      - 443:8443 
+    volumes:
+      - $DOCKER_DIR/appdata/heimdall/config:/config
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${GUID:-1000}
+      - GUID=${GUID:-1000} 
+      - TZ=${TZ:-America/Denver}
+
+
+###
 # System Volumes
 ###
 volumes:
@@ -111,5 +129,10 @@ volumes:
     external: true
   portainer_data:
     external: true
-  default:
-    driver: bridge
+  
+  ###
+  # networks
+  ###
+  networks:
+    default:
+      driver: bridge

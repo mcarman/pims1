@@ -48,7 +48,7 @@ libraries:                       # This is called out once within the config.yml
     overlay_path:
       - remove_overlays: false     # Set this to true to remove all overlays
       - pmm: ribbon                # This is a file within PMM's defaults folder
-      - pmm: ratings:
+      - pmm: ratings
           rating1: audience
           rating2: critic
           rating1_image: rt_tomato
@@ -63,20 +63,20 @@ libraries:                       # This is called out once within the config.yml
     - pmm: imdb                  # This is a file within PMM's defaults folder
       # see the wiki for how to use local files, folders, URLs, or files from git
     overlay_path:
-      - remove_overlays: false     # Set this to true to remove all overlays
+      - remove_overlays: true     # Set this to true to remove all overlays
       - pmm: ribbon                # This is a file within PMM's defaults folder
       - pmm: ratings
         template_variables:
           rating1: audience
-          rating2: critic
           rating1_image: rt_tomato
+          rating2: critic
           rating2_image: metacritic
       - pmm: ratings
         template_variables:
           overlay_level: episode
           rating1: audience
-          rating2: critic
           rating1_image: rt_tomato
+          rating2: critic
           rating2_image: metacritic
     operations:
       mass_critic_rating_update: imdb
@@ -90,10 +90,10 @@ libraries:                       # This is called out once within the config.yml
 #  Music:
 #    metadata_path:
 #      - file: config/Music.yml   # This is a local file THAT YOU MIGHT CREATE
-playlist_files:
-- pmm: playlist                  # This is a file within PMM's defaults folder
+  playlist_files:
+    - pmm: playlist                  # This is a file within PMM's defaults folder
   # see the wiki for how to use local files, folders, URLs, or files from git
-settings:
+settings: 
   cache: true
   cache_expiration: 60
   asset_directory: config/assets
