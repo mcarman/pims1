@@ -3,55 +3,23 @@
 libraries:                       # This is called out once within the config.yml file
   Movies:                        # These are names of libraries in your Plex
     metadata_path:
-    - pmm: basic                 # This is a file within PMM's defaults folder
-    - pmm: imdb                  # This is a file within PMM's defaults folder
-    - pmm: separator_award                          # An "index card"
-    - pmm: bafta                                    # BAFTA Awards
-      template_variables:                           # based on when the award show started
-        data:
-          starting: 2010
-          ending: current_year
-    - pmm: cannes                                   # Cannes Film Festival Awards
-      template_variables:                           # based on when the award show started
-        data:
-          starting: 2010
-          ending: current_year
-    - pmm: choice                                   # Critic's Choice Awards
-      template_variables:                           # based on when the award show started
-        data:
-          starting: 2010
-          ending: current_year
-    - pmm: golden                                   # Golden Globes Awards
-      template_variables:                           # based on when the award show started
-        data:
-          starting: 1943
-          ending: current_year
-    - pmm: oscars                                   # The Oscars
-      template_variables:                           # based on when the award show started
-        data:
-          starting: 1927
-          ending: current_year
-    - pmm: other_award                              # Other award collections
-    - pmm: spirit                                   # Independent Spirit Awards
-      template_variables:                           # based on when the award show started
-        data:
-          starting: 2010
-          ending: current_year
-    - pmm: sundance                                 # Sundance Film Festival Awards
-      template_variables:                           # based on when the award show started
-        data:
-          starting: 2010
+      - pmm: basic                 # This is a file within PMM's defaults folder
+      - pmm: imdb                  # This is a file within PMM's defaults folde
       # see the wiki for how to use local files, folders, URLs, or files from git
-    - file: metadata/movies/charts.yml
-    - file: metadata/movies/Movies.yml
-    - file: metadata/movies/collections.yml
+      - file: metadata/movies/charts.yml
+      - file: metadata/movies/Movies.yml
+      - file: metadata/movies/collections.yml
+      - file: metadata/movies/genres.yml
+      - file: metadata/movies/essentials.yml
+      - file: metadata/movies/holiday.yml
     overlay_path:
       - remove_overlays: false     # Set this to true to remove all overlays
       - pmm: ribbon                # This is a file within PMM's defaults folder
       - pmm: ratings
+        template_variables:
           rating1: audience
-          rating2: critic
           rating1_image: rt_tomato
+          rating2: critic
           rating2_image: metacritic
     operations:
       mass_critic_rating_update: imdb
@@ -59,8 +27,8 @@ libraries:                       # This is called out once within the config.yml
       # see the wiki for how to use local files, folders, URLs, or files from git
   TV Shows:
     metadata_path:
-    - pmm: basic                 # This is a file within PMM's defaults folder
-    - pmm: imdb                  # This is a file within PMM's defaults folder
+      - pmm: basic                 # This is a file within PMM's defaults folder
+      - pmm: imdb                  # This is a file within PMM's defaults folder
       # see the wiki for how to use local files, folders, URLs, or files from git
     overlay_path:
       - remove_overlays: true     # Set this to true to remove all overlays
@@ -84,10 +52,9 @@ libraries:                       # This is called out once within the config.yml
       # see the wiki for how to use local files, folders, URLs, or files from git
   Anime:
     metadata_path:
-    - pmm: basic                 # This is a file within PMM's defaults folder
-    - pmm: anilist               # This is a file within PMM's defaults folder
+      - pmm: basic                 # This is a file within PMM's defaults folder
+      - pmm: anilist               # This is a file within PMM's defaults folder
       # see the wiki for how to use local files, folders, URLs, or files from git
-#  Music:
 #    metadata_path:
 #      - file: config/Music.yml   # This is a local file THAT YOU MIGHT CREATE
   playlist_files:

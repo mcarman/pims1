@@ -1,5 +1,15 @@
 version: '3.9'
 
+###
+# Common Configs
+###
+x-environment: &default-tz-puid-pgid
+  TZ: ${TZ:-America/Denver}
+  PUID: ${PUID:-1000}
+  PGID: ${PGID--1000}
+  GUID: ${GUID:-1000}
+
+
 services:
 ###
 # Portainer - Manage docker contsainers and stack
@@ -81,8 +91,8 @@ services:
       - DOZZLE_TAILSIZE=300
       - DOZZLE_LEVEL=debug # info trace
     # ports:
-      # - 8080:8080 
-
+      # - 8080:8080
+ 
 ###
 #  tautulli - Utilities for Plex
 ###  
@@ -104,14 +114,14 @@ services:
     restart: unless-stopped
 
 ###
-# Heimdahl
+# Heimdall
 ###
-  heimdahl: 
+  heimdall: 
     image: lscr.io/linuxserver/heimdall
     container_name: heimdall
     ports:
       - 8010:80
-      - 443:8443 
+      - 8443:443 
     volumes:
       - $DOCKER_DIR/appdata/heimdall/config:/config
     environment:
@@ -119,7 +129,9 @@ services:
       - PGID=${GUID:-1000}
       - GUID=${GUID:-1000} 
       - TZ=${TZ:-America/Denver}
-
+    restart: unless-stopped
+    #networks:
+    #  - default
 
 ###
 # System Volumes
@@ -131,8 +143,8 @@ volumes:
     external: true
   
   ###
-  # networks
+  # Networks
   ###
-  networks:
-    default:
-      driver: bridge
+  #networks:
+  #  default:
+  #    driver: bridge
