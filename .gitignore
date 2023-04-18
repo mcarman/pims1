@@ -208,3 +208,4 @@ UUID
 
 #tautulli
 config.ini
+tautulli/config/cache/*.*
