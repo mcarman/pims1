@@ -125,10 +125,14 @@ services:
       - $MEDIA_DIR/media/audio/playlists:/playlists
       - $MEDIA_DIR/media/podcasts:/podcasts
       - $APPDATA/airsonic/config:/config
-    <<: *default-tz-puid-pgid
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${GUID:-1000}
+    #  - GUID=${GUID:-1000} 
+      - TZ=$={TZ:-America/Denver}
     restart: unless-stopped
-    device:
-      - /dev/snd
+#    device:
+#      - /dev/snd
 
 ###
 # Heimdall
@@ -141,7 +145,11 @@ services:
       - 8443:443 
     volumes:
       - $DOCKER_DIR/appdata/heimdall/config:/config
-    <<: *default-tz-puid-pgid
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${GUID:-1000}
+#      - GUID=${GUID:-1000} 
+      - TZ=$={TZ:-America/Denver}
     restart: unless-stopped
     #networks:
     #  - default
