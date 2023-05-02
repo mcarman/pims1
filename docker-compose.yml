@@ -71,7 +71,7 @@ services:
       - PMM_NO_MISSING=${PMM_NO_MISSING:-False} #optional
     volumes:
       - ${DOCKER_DIR}/plex_meta_manager/config/config.yml:/config/config.yml
-      - ${DOCKER_DIR}/plex_meta_manager/config:/config
+#       - ${DOCKER_DIR}/plex_meta_manager/config:/config
 
 ###
 # dozzle, unified log interface
@@ -106,12 +106,12 @@ services:
       - PUID=${PUID:-1000}
       - PGID=${GUID:-1000}
       - GUID=${GUID:-1000} 
-      - TZ=$={TZ:-America/Denver}
+      - TZ=${TZ:-America/Denver}
     volumes:
-      - ${DOCKER_DIR}/tautulli/config/:/config/
+      - $APPDATA/tautulli/config/:/config/
         # ports:
         # - 8181:8181
-    restart: never
+    restart: unless-stopped
 
 ###
 # Airsonic advanced
@@ -129,7 +129,7 @@ services:
       - PUID=${PUID:-1000}
       - PGID=${GUID:-1000}
     #  - GUID=${GUID:-1000} 
-      - TZ=$={TZ:-America/Denver}
+      - TZ=${TZ:-America/Denver}
     restart: unless-stopped
 #    device:
 #      - /dev/snd
@@ -144,12 +144,12 @@ services:
       - 8010:80
       - 8443:443 
     volumes:
-      - $DOCKER_DIR/appdata/heimdall/config:/config
+      - $APPDATA/heimdall/config:/config
     environment:
       - PUID=${PUID:-1000}
       - PGID=${GUID:-1000}
 #      - GUID=${GUID:-1000} 
-      - TZ=$={TZ:-America/Denver}
+      - TZ=${TZ:-America/Denver}
     restart: unless-stopped
     #networks:
     #  - default
