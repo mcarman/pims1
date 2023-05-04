@@ -13,19 +13,19 @@ sections:
     items:
       - title: Syncthing
         description: Peer-to-peer file synchronization
-        icon: productivity/syncthing.png
+        icon: img/icons/dashy-logo.png
         id: 0_1302_syncthing
   - name: Firewall
     items:
       - title: NetData
         description: System resource usage on firewall
-        icon: networking/netdata.png
+        icon: img/icons/dashy-logo.png
         id: 0_822_netdata
   - name: Networks
     items:
       - title: SmokePing
         description: Network latency monitoring
-        icon: networking/smokeping.png
+        icon: img/icons/smokeping.jpg
         url: http://10.0.0.223:84
         target: newtab
         id: 0_861_smokeping
@@ -33,53 +33,55 @@ sections:
     items:
       - title: Portainer
         description: Docker container management
-        icon: networking/portainer.png
+        icon: img/icons/portainer.svg
+        url: https://10.0.0.223:9443
         id: 0_1593_portainer
       - title: Glances
         description: Simple resource usage
-        icon: networking/glances.png
+        icon: img/icons/dashy-logo.png
         id: 1_1593_glances
       - title: Dozzle
         description: Docker container web log viewer
-        icon: networking/dozzle.png
-        url: 10.0.0.223:8080
+        icon: img/icons/"dozzle.png"
+        url: http://10.0.0.223:8080
         target: newtab
         id: 2_1593_dozzle
   - name: External Services
     items:
       - title: HealthChecks
         description: Cron Job Monitoring
-        icon: networking/healthchecks.png
+        icon: img/icons/dashy-logo.png
         url: https://healthchecks.io/checks/
         id: 0_1703_healthchecks
       - title: ISP - Comcast
         description: Broadband internet provider
-        icon: networking/vodafone.png
+        icon: img/icons/cloudflare.svg
         url: https://comcast.com/
         id: 1_1703_ispcomcast
   - name: Media
     items:
       - title: Plex
         description: Self-Hosted Media Streaming Service
-        icon: media/plex.png
+        icon: img/icons/plex.png
         url: http://10.0.0.223:32400/web
         target: newtab
         id: 0_480_plex
       - title: Tautulli
         description: Monitoring and statistics for Plex
-        icon: media/tautulli.png
+        icon: img/icons/tautulli.png
         url: http://10.0.0.223:8181
         target: newtab
         id: 1_480_tautulli
       - title: plex_media_manager
         description: Plex Library display manager
-        icon: media/pmm.png
+        icon: img/icons/plex.png
         url: http://10.0.0.223
         target: newtab
         id: 2_480_plexmediamanager
       - title: Airsonic
         description: Music and Podcast Player
-        url: 10.0.0.223:4040
+        icon: img/icons/airsonic.png
+        url: http://10.0.0.223:4040
         target: newtab
         id: 3_480_airsonic
   - name: External Utilities
@@ -105,10 +107,11 @@ sections:
       - title: Heimdall
         description: Alternative homepage
         url: http://10.0.0.223:8010
+        icons: img/icons/plex.png
         target: newtab
         id: 3_1823_heimdall
   - name: International Time
-    icon: fad fa-clock
+    icon: "fad fa-clock"
     widgets:
       - type: clock
         options:
@@ -122,6 +125,6 @@ sections:
         id: 1_1799_clock
       - type: clock
         options:
-          timeZone: America/Miami
+          timeZone: America/Tampa
           format: en-US
         id: 2_1799_clock

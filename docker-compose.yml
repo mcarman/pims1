@@ -108,7 +108,8 @@ services:
       - GUID=${GUID:-1000} 
       - TZ=${TZ:-America/Denver}
     volumes:
-      - $APPDATA/tautulli/config/:/config/
+      - $APPDATA/tautulli/config:/config
+      - $PLEX_LOGS:/plexlogs
         # ports:
         # - 8181:8181
     restart: unless-stopped
