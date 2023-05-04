@@ -1,177 +1,127 @@
 pageInfo:
   title: Home Lab
 appConfig:
-  theme: nord-frost
+  theme: material-dark
+  layout: auto
+  iconSize: medium
+  language: en
 sections:
-- name: Productivity
-  displayData:
-    collapsed: false
-    cols: 2
-  items:
-#  - title: GifWit
-#    description: Personal GIF library
-#    icon: productivity/gifwit.png
-#  - title: LessPass
-#    description: Deterministic stateless password manager
-#    icon: productivity/lesspass.png
-#  - title: NextCloud
-#    description: Cloud office suit and collaboration platform
-#    icon: productivity/nextcloud.png
-#  - title: Paperless
-#    description: Scan, index, and archive physical paper documents
-#    icon: productivity/paperless.png
-#  - title: Photo Prism
-#    description: Browsing, organizing, and sharing photos and albums
-#    icon: productivity/photo-prism.png
-#  - title: Standard Notes
-#    description: Encrypted notes app, with extensions and desktop + mobile apps
-#    icon: productivity/standard-notes.png
-#  - title: Syncthing
-#    description: Peer-to-peer file synchronization
-#    icon: productivity/syncthing.png
-#  - title: Wallabag
-#    description: Saved URLs and bookmarks
-#    icon: productivity/wallabag.png
-#  - title: XBrowserSync
-#    description: Bookmarks, history and browser sync
-#    icon: productivity/x-browser-sync.png
-- name: Firewall
-  items:
-  - title: NetData
-    description: System resource usage on firewall
-    icon: networking/netdata.png
-#  - title: MalTrail
-#    description: Malicious traffic detection system
-#    icon: networking/maltrail.png
-#  - title: Ntopng
-#    description: Network traffic probe and network use monitor
-#    icon: networking/ntop.png
-#  - title: Sensei
-#    description: Additional data features
-#    icon: networking/sensei.png
-#  - title: Monit
-#    description: Status of firewall system alerts
-#    icon: networking/monit.png
-#  - title: Firewall Logs
-#    description: Real-time view of firewall data and logs
-#    icon: networking/logs.png
-#  - title: WireGuard
-#    description: Manage WireGuard client and server on firewall
-#    icon: networking/wireguard.png
-- name: Networks
-  items:
-#  - title: SmokePing
-#    description: Network latency monitoring
-#    icon: networking/smokeping.png
-#  - title: StatPing
-#    description: Up-time monitoring for local service
-#    icon: networking/statping.png
-#  - title: LibreSpeed
-#    description: Local network speed and latency test
-#    icon: networking/librespeed.png
-#  - title: Grafana
-#    description: Data visualised on dashboards
-#    icon: networking/grafana.png
-- name: System Maintence
-  items:
-#  - title: NetData
-#    description: Real-time system resource usage
-#    icon: networking/netdata.png
-  - title: Portainer
-    description: Docker container management
-    icon: networking/portainer.png
-#  - title: cAdvisor
-#    description: Container monitoring
-#    icon: networking/cadvisor.png
-  - title: Glances
-    description: Simple resource usage
-    icon: networking/glances.png
-  - title: Dozzle
-    description: Docker container web log viewer
-    icon: networking/dozzle.png
-#  - title: Prometheus
-#    description: System Statistics Aggregation with PromQL
-#    icon: networking/prometheus.png
-- name: External Services
-  items:
-#  - title: DuckDNS
-#    description: Dynamic DNS for fixed public IP
-#    icon: networking/duckdns.png
-#  - title: ZeroTier
- #   description: Secure networks between devices
-#    icon: networking/zeroteir.png
-#    url: https://my.zerotier.com/
-  - title: HealthChecks
-    description: Cron Job Monitoring
-    icon: networking/healthchecks.png
-    url: https://healthchecks.io/checks/
-  - title: ISP - Comcast
-    description: Broadband internet provider
-    icon: networking/vodafone.png
-    url: https://comcast.com/
-- name: Media
-  items:
-  - title: Plex
-    description: Self-Hosted Media Streaming Service
-    icon: media/plex.png
-  - title: Tautulli
-    description: Monitoring and statistics for Plex
-    icon: media/tautulli.png
-  - title: plex_media_manager
-    description: Plex Library display manager 
-    icon: media/pmm.png
-#  - title: Couch Potato
-#    description: Automatic Movie Downloading via NZBs & Torrents
-#    icon: media/couch-potato.png
-- name: Home Control
-  items:
-  - title: Home Assistant
-    description: Smart home control
-    icon: smart-home/home-assistant.png
-  - title: Node-RED
-    description: Flow-based automation
-    icon: smart-home/node-red.png
-- name: Other Devices
-  items:
-  - title: Modem
-    description: ISP Router Modem Combo
-    icon: ''
-  - title: Wireless Access Point
-    description: View clients connected to WiFi
-  - title: Fing
-    description: Monitor connectivity issues, ISP quality, health checks and troubleshooting
-    provider: Fing
-    url: https://app.fing.com/
-#  - title: Switch
-#    description: Manage VLANs on Ubiquity Ethernet switch
-- name: External Utilities
-  displayData:
-    collapsed: true
-  items:
-  - title: Public IP
-    description: Check public IP and associated data
-    url: https://www.whatismyip.com/
-  - title: Who Is Lookup
-    description: Check ICAN info for a given IP address or domain
-    url: https://whois.domaintools.com/
-  - title: Speed Test
-    description: Upload + download speeds and latency
-    url: https://speed.cloudflare.com/
- # - title: Mullvad Check
- #   description: Confirms a secure connection to Mullvad's WireGuard servers
- #   url: https://mullvad.net/check
-- name: International Time
-  icon: fad fa-clock
-  widgets:
-  - type: clock
-    options:
-      timeZone: UTC/UTC
-      format: en-US
-  - type: clock
-    options:
-      timeZone: America/Denver
-      format: en-US
-  - type: clock
-    options:
-      timeZone: America/Miami
-      format: en-US
+  - name: Productivity
+    displayData:
+      collapsed: false
+      cols: 2
+    items:
+      - title: Syncthing
+        description: Peer-to-peer file synchronization
+        icon: productivity/syncthing.png
+        id: 0_1302_syncthing
+  - name: Firewall
+    items:
+      - title: NetData
+        description: System resource usage on firewall
+        icon: networking/netdata.png
+        id: 0_822_netdata
+  - name: Networks
+    items:
+      - title: SmokePing
+        description: Network latency monitoring
+        icon: networking/smokeping.png
+        url: http://10.0.0.223:84
+        target: newtab
+        id: 0_861_smokeping
+  - name: System Maintence
+    items:
+      - title: Portainer
+        description: Docker container management
+        icon: networking/portainer.png
+        id: 0_1593_portainer
+      - title: Glances
+        description: Simple resource usage
+        icon: networking/glances.png
+        id: 1_1593_glances
+      - title: Dozzle
+        description: Docker container web log viewer
+        icon: networking/dozzle.png
+        url: 10.0.0.223:8080
+        target: newtab
+        id: 2_1593_dozzle
+  - name: External Services
+    items:
+      - title: HealthChecks
+        description: Cron Job Monitoring
+        icon: networking/healthchecks.png
+        url: https://healthchecks.io/checks/
+        id: 0_1703_healthchecks
+      - title: ISP - Comcast
+        description: Broadband internet provider
+        icon: networking/vodafone.png
+        url: https://comcast.com/
+        id: 1_1703_ispcomcast
+  - name: Media
+    items:
+      - title: Plex
+        description: Self-Hosted Media Streaming Service
+        icon: media/plex.png
+        url: http://10.0.0.223:32400/web
+        target: newtab
+        id: 0_480_plex
+      - title: Tautulli
+        description: Monitoring and statistics for Plex
+        icon: media/tautulli.png
+        url: http://10.0.0.223:8181
+        target: newtab
+        id: 1_480_tautulli
+      - title: plex_media_manager
+        description: Plex Library display manager
+        icon: media/pmm.png
+        url: http://10.0.0.223
+        target: newtab
+        id: 2_480_plexmediamanager
+      - title: Airsonic
+        description: Music and Podcast Player
+        url: 10.0.0.223:4040
+        target: newtab
+        id: 3_480_airsonic
+  - name: External Utilities
+    displayData:
+      collapsed: true
+      sortBy: default
+      rows: 1
+      cols: 1
+      hideForGuests: false
+    items:
+      - title: Public IP
+        description: Check public IP and associated data
+        url: https://www.whatismyip.com/
+        id: 0_1823_publicip
+      - title: Who Is Lookup
+        description: Check ICAN info for a given IP address or domain
+        url: https://whois.domaintools.com/
+        id: 1_1823_whoislookup
+      - title: Speed Test
+        description: Upload + download speeds and latency
+        url: https://speed.cloudflare.com/
+        id: 2_1823_speedtest
+      - title: Heimdall
+        description: Alternative homepage
+        url: http://10.0.0.223:8010
+        target: newtab
+        id: 3_1823_heimdall
+  - name: International Time
+    icon: fad fa-clock
+    widgets:
+      - type: clock
+        options:
+          timeZone: UTC/UTC
+          format: en-US
+        id: 0_1799_clock
+      - type: clock
+        options:
+          timeZone: America/Denver
+          format: en-US
+        id: 1_1799_clock
+      - type: clock
+        options:
+          timeZone: America/Miami
+          format: en-US
+        id: 2_1799_clock

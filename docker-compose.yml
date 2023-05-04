@@ -71,7 +71,7 @@ services:
       - PMM_NO_MISSING=${PMM_NO_MISSING:-False} #optional
     volumes:
       - ${DOCKER_DIR}/plex_meta_manager/config/config.yml:/config/config.yml
-#       - ${DOCKER_DIR}/plex_meta_manager/config:/config
+      - ${DOCKER_DIR}/plex_meta_manager/config:/config
 
 ###
 # dozzle, unified log interface
@@ -129,7 +129,7 @@ services:
       - PUID=${PUID:-1000}
       - PGID=${GUID:-1000}
     #  - GUID=${GUID:-1000} 
-      - TZ=${TZ:-America/Denver}
+      - TZ=${TZ:-Etc/UTC}
     restart: unless-stopped
 #    device:
 #      - /dev/snd
@@ -185,9 +185,26 @@ services:
       retries: 3
       start_period: 40s
 
-###
+####
+# network connectivity monitor
+####
+  smokeping:
+    image: lscr.io/linuxserver/smokeping:latest
+    container_name: smokeping
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=$(PGID:-995}
+      - TZ=${TZ:-America/Denver}
+    volumes:
+      - $APPDATA/smokeping:/config
+      - $MEDIA_DIR/appdata/smokeping/data:/data
+    ports:
+      - 84:80
+    restart: unless-stopped
+ 
+####
 # System Volumes
-###
+####
 volumes:
   plex_config:
     external: true
