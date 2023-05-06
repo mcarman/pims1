@@ -42,7 +42,7 @@ sections:
         id: 1_1593_glances
       - title: Dozzle
         description: Docker container web log viewer
-        icon: img/icons/"dozzle.png"
+        icon: img/icons/dozzle.png
         url: http://10.0.0.223:8080
         target: newtab
         id: 2_1593_dozzle
