@@ -70,17 +70,15 @@ services:
       - PMM_TEST=${PMM_TEST:-False} #optional
       - PMM_NO_MISSING=${PMM_NO_MISSING:-False} #optional
     volumes:
-      - ${APPDATA}/plex_meta_manager/config/config.yml:/config/config.yml
-      - ${APPDATA}/plex_meta_manager/config:/config
+      - $APPDATA/plex_meta_manager/config/config.yml:/config/config.yml
+      - $APPDATA/plex_meta_manager/config:/config
 
 ###
 # dozzle, unified log interface
-# ##
+###
   dozzle:
+    image: amir20/dozzle
     container_name: dozzle
-    image: amir20/dozzle:latest
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
     network_mode: host
     environment:
@@ -90,6 +88,8 @@ services:
       - TZ=${TZ:-America/Denver}
       - DOZZLE_TAILSIZE=300
       - DOZZLE_LEVEL=debug # info trace
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     # ports:
       # - 8080:8080
  
@@ -100,7 +100,7 @@ services:
     image: lscr.io/linuxserver/tautulli:latest
     container_name: tautulli
     network_mode: host
-    depends_on: 
+    depends_on:
       - plex
     environment:
       - PUID=${PUID:-1000}
@@ -203,6 +203,21 @@ services:
       - 84:80
     restart: unless-stopped
  
+###
+# Watchtoer to automate updates
+###
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: unless_stopped
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=$(PGID:-995}
+      - TZ=${TZ:-America/Denver}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+
 ####
 # System Volumes
 ####
