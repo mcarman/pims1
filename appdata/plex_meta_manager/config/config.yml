@@ -3,50 +3,50 @@
 libraries:                       # This is called out once within the config.yml file
   Movies:                        # These are names of libraries in your Plex
     metadata_path:
-      - pmm: basic                 # This is a file within PMM's defaults folder
-      - pmm: imdb
-        asset_directory: assets/Movies                  # This is a file within PMM's defaults folde
+    - pmm: basic                   # This is a file within PMM's defaults folder
+    - pmm: imdb
+      asset_directory: assets/Movies                    # This is a file within PMM's defaults folde
       # see the wiki for how to use local files, folders, URLs, or files from git
-      - file: metadata/movies/charts.yml
-      - file: metadata/movies/Movies.yml
-      - file: metadata/movies/collections.yml
-      - file: metadata/movies/genres.yml
-      - file: metadata/movies/essentials.yml
-      - file: metadata/movies/holiday.yml
+    - file: metadata/movies/charts.yml
+    - file: metadata/movies/Movies.yml
+    - file: metadata/movies/collections.yml
+    - file: metadata/movies/genres.yml
+    - file: metadata/movies/essentials.yml
+    - file: metadata/movies/holiday.yml
     overlay_path:
-      - remove_overlays: false     # Set this to true to remove all overlays
-      - pmm: ribbon                # This is a file within PMM's defaults folder
-      - pmm: ratings
-        template_variables:
-          rating1: audience
-          rating1_image: rt_tomato
-          rating2: critic
-          rating2_image: metacritic
+    - remove_overlays: false       # Set this to true to remove all overlays
+    - pmm: ribbon                  # This is a file within PMM's defaults folder
+    - pmm: ratings
+      template_variables:
+        rating1: audience
+        rating1_image: rt_tomato
+        rating2: critic
+        rating2_image: metacritic
     operations:
       mass_critic_rating_update: imdb
       mass_audience_rating_update: mdb_tomatoesaudience
       # see the wiki for how to use local files, folders, URLs, or files from git
   TV Shows:
     metadata_path:
-      - pmm: basic                 # This is a file within PMM's defaults folder
-      - pmm: imdb                  # This is a file within PMM's defaults folder
+    - pmm: basic                   # This is a file within PMM's defaults folder
+    - pmm: imdb                    # This is a file within PMM's defaults folder
       # see the wiki for how to use local files, folders, URLs, or files from git
     overlay_path:
-      - remove_overlays: true     # Set this to true to remove all overlays
-      - pmm: ribbon                # This is a file within PMM's defaults folder
-      - pmm: ratings
-        template_variables:
-          rating1: audience
-          rating1_image: rt_tomato
-          rating2: critic
-          rating2_image: metacritic
-      - pmm: ratings
-        template_variables:
-          overlay_level: episode
-          rating1: audience
-          rating1_image: rt_tomato
-          rating2: critic
-          rating2_image: metacritic
+    - remove_overlays: true       # Set this to true to remove all overlays
+    - pmm: ribbon                  # This is a file within PMM's defaults folder
+    - pmm: ratings
+      template_variables:
+        rating1: audience
+        rating1_image: rt_tomato
+        rating2: critic
+        rating2_image: metacritic
+    - pmm: ratings
+      template_variables:
+        overlay_level: episode
+        rating1: audience
+        rating1_image: rt_tomato
+        rating2: critic
+        rating2_image: metacritic
     operations:
       mass_critic_rating_update: imdb
       mass_audience_rating_update: mdb_tomatoesaudience
@@ -59,9 +59,9 @@ libraries:                       # This is called out once within the config.yml
 #    metadata_path:
 #      - file: config/Music.yml   # This is a local file THAT YOU MIGHT CREATE
   playlist_files:
-    - pmm: playlist                  # This is a file within PMM's defaults folder
+  - pmm: playlist                    # This is a file within PMM's defaults folder
   # see the wiki for how to use local files, folders, URLs, or files from git
-settings: 
+settings:
   cache: true
   cache_expiration: 60
   asset_directory: config/assets
@@ -114,10 +114,10 @@ plex:                            # Can be individually specified per library as 
   clean_bundles: true
   empty_trash: true
   optimize: true
-tmdb:                            # REQUIRED for the script to run
-  apikey: ${TMDB_TOKEN}
-  language: en
-  cache_expiration: 60
+#tmdb:                            # REQUIRED for the script to run
+#  apikey: ${TMDB_TOKEN}
+#  language: en
+#  cache_expiration: 60
 tautulli:                        # Can be individually specified per library as well
   url: http://10.0.0.223:8181
   apikey: ${TAUTULLI_API_TOKEN}
@@ -170,6 +170,10 @@ trakt:
     refresh_token:
     scope: public
     created_at:
+tmdb:
+  apikey:
+#tmdb:
+#  apikey:
 #mal:
 #  client_id: ####################
 #  client_secret: ####################

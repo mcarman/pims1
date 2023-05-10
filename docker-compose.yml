@@ -149,7 +149,6 @@ services:
     environment:
       - PUID=${PUID:-1000}
       - PGID=${GUID:-1000}
-#      - GUID=${GUID:-1000} 
       - TZ=${TZ:-America/Denver}
     restart: unless-stopped
     #networks:
@@ -207,17 +206,34 @@ services:
 # Watchtoer to automate updates
 ###
   watchtower:
-    image: containrrr/watchtower:arm64
+    image: containrrr/watchtower:latest
     container_name: watchtower
-    restart: unless_stopped
+    restart: unless-stopped
     environment:
       - PUID=${PUID:-1000}
       - PGID=$(PGID:-995}
       - TZ=${TZ:-America/Denver}
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-#    command: --interval 3600
+      - /var/run/docker.sock:/var/run/docker.sock:ro 
 
+###
+# Notifiarr - messaging for media server
+###
+ notifiarr:
+    container_name: notifiarr
+    hostname: notifiarr
+    image: golift/notifiarr
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=$(PGID:-995}
+      - TZ=${TZ:-America/Denver}
+    ports:
+      - "5454:5454"
+    volumes:
+      - ${APPDATA}/notifiarr/config:/config
+#      - /var/run/utmp:/var/run/utmp
+      - /etc/machine-id:/etc/machine-id
 
 ####
 # System Volumes
