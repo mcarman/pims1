@@ -207,7 +207,7 @@ services:
 # Watchtoer to automate updates
 ###
   watchtower:
-    image: containrrr/watchtower
+    image: containrrr/watchtower:arm64
     container_name: watchtower
     restart: unless_stopped
     environment:
@@ -216,6 +216,7 @@ services:
       - TZ=${TZ:-America/Denver}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+#    command: --interval 3600
 
 
 ####
