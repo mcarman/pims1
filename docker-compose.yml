@@ -3,11 +3,11 @@ version: '3.9'
 ###
 # Common Configs
 ### 
-x-environment: &default-tz-puid-pgid
-  TZ: ${TZ:-America/Denver}
-  PUID: ${PUID:-1000}
-  PGID: ${PGID--1000}
-  GUID: ${GUID:-1000}
+x-environment: &tz-puid-pgid
+  - TZ=${TZ:-Etc/UTC}
+  - PUID=${PUID:-1000}
+  - PGID=${PGID--1000}
+  - GUID=${GUID:-1000}
 
 
 services:
@@ -21,7 +21,8 @@ services:
     environment:
       - PUID=${PUID:-1000}
       - GUID=${GUID:-1000}
-      - TZ=${TZ:-America/Denver}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Etc/UTC}  
     network_mode: host
     volumes:
       - "/var/lib/docker:/var/lib/docker"
@@ -63,7 +64,7 @@ services:
       - PUID=${PUID:-1000}
       - GUID=${GUID:-1000}
       - PGID=${PGID:-1000}
-      - TZ=${TZ:-America/Denver}
+      - TZ=${TZ:-Etc/UTC}
       - PMM_CONFIG=${PMM_CONFIG:-/config/config.yml} #optional
       - PMM_TIME=${PMM_TIME:-03:00} #optional
       - PMM_RUN=${PMM_RUN:-False} #optional
@@ -72,6 +73,7 @@ services:
     volumes:
       - $APPDATA/plex_meta_manager/config/config.yml:/config/config.yml
       - $APPDATA/plex_meta_manager/config:/config
+    command: -r
 
 ###
 # dozzle, unified log interface
@@ -85,13 +87,13 @@ services:
       - PUID=${PUID:-1000}
       - GUID=${GUID:-1000}
       - PGID=${PGID:-1000}
-      - TZ=${TZ:-America/Denver}
+      - TZ=${TZ:-Etc/UTC}
       - DOZZLE_TAILSIZE=300
       - DOZZLE_LEVEL=debug # info trace
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    # ports:
-      # - 8080:8080
+    ports:
+      - 8080:8080
  
 ###
 #  tautulli - Utilities for Plex
@@ -106,7 +108,9 @@ services:
       - PUID=${PUID:-1000}
       - PGID=${GUID:-1000}
       - GUID=${GUID:-1000} 
-      - TZ=${TZ:-America/Denver}
+      - TZ=${TZ:-Etc/UTC}
+    ports:
+      - "8181:8181"
     volumes:
       - $APPDATA/tautulli/config:/config
       - $PLEX_LOGS:/plexlogs
@@ -119,13 +123,14 @@ services:
 ###
   airsonic:
     image: lscr.io/linuxserver/airsonic-advanced:latest
-    container_name: airsonic
     network_mode: host
     volumes:
       - $MEDIA_DIR/media/audio:/music
       - $MEDIA_DIR/media/audio/playlists:/playlists
       - $MEDIA_DIR/media/podcasts:/podcasts
       - $APPDATA/airsonic/config:/config
+    ports:
+      - 4040:80
     environment:
       - PUID=${PUID:-1000}
       - PGID=${GUID:-1000}
@@ -136,7 +141,7 @@ services:
 #      - /dev/snd
 
 ###
-# Heimdall
+# Heimdall homepage with links to all apps
 ###
   heimdall: 
     image: lscr.io/linuxserver/heimdall
@@ -148,8 +153,8 @@ services:
       - $APPDATA/heimdall/config:/config
     environment:
       - PUID=${PUID:-1000}
-      - PGID=${GUID:-1000}
-      - TZ=${TZ:-America/Denver}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Etc/UTC}
     restart: unless-stopped
     #networks:
     #  - default
@@ -157,7 +162,6 @@ services:
 ###
 # Dashy alternative to heimdall
 ###
-  
   dashy:
     # To build from source, replace 'image: lissy93/dashy' with 'build: .'
     # build: .
@@ -168,14 +172,11 @@ services:
       - $APPDATA/dashy/public/config.yml:/app/public/conf.yml
     ports:
       - 4000:80
-    # Set any environmental variables
     environment:
     #  - NODE_ENV=production
-    # Specify your user ID and group ID. You can find this by running `id -u` and `id -g`
       - UID=${PUID:-1000}
       - GID=${GUID:-1000}
-      - TZ=${TZ:-America/Denver}
-    # Specify restart policy
+      - TZ=${TZ:-Etc/UTC}
     restart: unless-stopped
     # Configure healthchecks
     healthcheck:
@@ -191,10 +192,11 @@ services:
   smokeping:
     image: lscr.io/linuxserver/smokeping:latest
     container_name: smokeping
+    hostname: smokeping
     environment:
       - PUID=${PUID:-1000}
-      - PGID=$(PGID:-995}
-      - TZ=${TZ:-America/Denver}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Etc/UTC}
     volumes:
       - $APPDATA/smokeping:/config
       - $MEDIA_DIR/appdata/smokeping/data:/data
@@ -211,23 +213,40 @@ services:
     restart: unless-stopped
     environment:
       - PUID=${PUID:-1000}
-      - PGID=$(PGID:-995}
-      - TZ=${TZ:-America/Denver}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Etc/UTC}
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro 
+      - /var/run/docker.sock:/var/run/docker.sock
+#    command: --interval 3600
 
 ###
 # Notifiarr - messaging for media server
 ###
- notifiarr:
+  notifiarr:
     container_name: notifiarr
     hostname: notifiarr
     image: golift/notifiarr
     restart: unless-stopped
     environment:
       - PUID=${PUID:-1000}
-      - PGID=$(PGID:-995}
-      - TZ=${TZ:-America/Denver}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Etc/UTC}
+      - DN_UI_PASSWORD=$DN_UI_PASSWORD
+      - DN_API_KEY=$NOTIFIARR_API_TOKEN
+      - DN_QUIET=false
+      - DN_LOG_FILE=$APPDATA/notifiarr/logs
+      - DN_LOG_FILES=3
+      # Plex info, add http://localhost:5454/plex?token=plex-token-here to plex
+      - DN_PLEX_URL=$DN_PLEX_URL 
+      - DN_PLEX_TOKEN=$PLEX_API_TOKEN
+      # tautulli variables
+      - DN_TAUTULLI_NAME=$DN_TAUTULLI_NAME
+      - DN_TAUTULLI_URL=$DN_TAUTULLI_URL
+      - DN_TAUTULLI_API_KEY=$TAUTULLI_API_TOKEN
+      - USER=$PUID
+    depends_on:
+      - tautulli
+      - plex
     ports:
       - "5454:5454"
     volumes:

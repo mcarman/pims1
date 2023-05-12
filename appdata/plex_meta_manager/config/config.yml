@@ -1,52 +1,44 @@
 ## This file is a template remove the .template to use the file
 
 libraries:                       # This is called out once within the config.yml file
-  Movies:                        # These are names of libraries in your Plex
+  Movies:     # These are names of libraries in your Plex                    # This is a file within PMM's defaults folde
     metadata_path:
-    - pmm: basic                   # This is a file within PMM's defaults folder
+    - pmm: basic                     # This is a file within PMM's defaults folder
     - pmm: imdb
-      asset_directory: assets/Movies                    # This is a file within PMM's defaults folde
-      # see the wiki for how to use local files, folders, URLs, or files from git
-    - file: metadata/movies/charts.yml
-    - file: metadata/movies/Movies.yml
-    - file: metadata/movies/collections.yml
-    - file: metadata/movies/genres.yml
-    - file: metadata/movies/essentials.yml
-    - file: metadata/movies/holiday.yml
+    - pmm: seasonal
+    - file: config/metadata/movies/charts.yml
+    - file: config/metadata/movies/Movies.yml
+    - file: config/metadata/movies/collections.yml
+    - file: config/metadata/movies/genres.yml
+    - file: config/metadata/movies/essentials.yml
     overlay_path:
-    - remove_overlays: false       # Set this to true to remove all overlays
-    - pmm: ribbon                  # This is a file within PMM's defaults folder
+    - remove_overlays: false         # Set this to true to remove all overlays
+    - pmm: ribbon                    # This is a file within PMM's defaults folder
     - pmm: ratings
-      template_variables:
-        rating1: audience
-        rating1_image: rt_tomato
-        rating2: critic
-        rating2_image: metacritic
+    template_variables:
+      rating1: audience
+      rating1_image: rt_tomato
+      rating2: critic
+      rating2_image: metacritic
     operations:
       mass_critic_rating_update: imdb
       mass_audience_rating_update: mdb_tomatoesaudience
       # see the wiki for how to use local files, folders, URLs, or files from git
   TV Shows:
     metadata_path:
-    - pmm: basic                   # This is a file within PMM's defaults folder
-    - pmm: imdb                    # This is a file within PMM's defaults folder
+    - pmm: basic                     # This is a file within PMM's defaults folder
+    - pmm: imdb                      # This is a file within PMM's defaults folder
       # see the wiki for how to use local files, folders, URLs, or files from git
     overlay_path:
-    - remove_overlays: true       # Set this to true to remove all overlays
-    - pmm: ribbon                  # This is a file within PMM's defaults folder
+    - remove_overlays: false         # Set this to true to remove all overlays
+    - pmm: ribbon                    # This is a file within PMM's defaults folder
     - pmm: ratings
-      template_variables:
-        rating1: audience
-        rating1_image: rt_tomato
-        rating2: critic
-        rating2_image: metacritic
-    - pmm: ratings
-      template_variables:
-        overlay_level: episode
-        rating1: audience
-        rating1_image: rt_tomato
-        rating2: critic
-        rating2_image: metacritic
+    template_variables:
+      overlay_level: episode
+      rating1: audience
+      rating1_image: rt_tomato
+      rating2: critic
+      rating2_image: metacritic
     operations:
       mass_critic_rating_update: imdb
       mass_audience_rating_update: mdb_tomatoesaudience
@@ -59,7 +51,7 @@ libraries:                       # This is called out once within the config.yml
 #    metadata_path:
 #      - file: config/Music.yml   # This is a local file THAT YOU MIGHT CREATE
   playlist_files:
-  - pmm: playlist                    # This is a file within PMM's defaults folder
+  - pmm: playlist                      # This is a file within PMM's defaults folder
   # see the wiki for how to use local files, folders, URLs, or files from git
 settings:
   cache: true
@@ -101,23 +93,20 @@ settings:
   show_unconfigured: true
   playlist_exclude_users:
 webhooks:                        # Can be individually specified per library as well
-  error:
+  error: notifiarr
+  run_start: notifiarr
+  run_end: notifiarr
+  changes: notifiarr
+  delete: notifiarr
   version:
-  run_start:
-  run_end:
-  changes:
-  delete:
 plex:                            # Can be individually specified per library as well; REQUIRED for the script to run
   url: http://10.0.0.223:32400
-  token: ${PLEX_TOKEN}
+  token: ${PLEX_API_TOKEN}
   timeout: 60
-  clean_bundles: true
-  empty_trash: true
-  optimize: true
-#tmdb:                            # REQUIRED for the script to run
-#  apikey: ${TMDB_TOKEN}
-#  language: en
-#  cache_expiration: 60
+  clean_bundles: false
+  empty_trash: false
+  optimize: false
+# tautulli
 tautulli:                        # Can be individually specified per library as well
   url: http://10.0.0.223:8181
   apikey: ${TAUTULLI_API_TOKEN}
@@ -126,9 +115,11 @@ tautulli:                        # Can be individually specified per library as 
 #  cache_expiration: 60
 mdblist:
   apikey: ${MDBLIST_API_TOKEN}
+  language: en
+  region: US
   cache_expiration: 60
 notifiarr:
-  apikey: ${NOTIFIAR_TOKEN}
+  apikey: ${NOTIFIARR_API_TOKEN}
 #anidb:                           # Not required for AniDB builders unless you want mature content
 #  username: ######
 #  password: ######
@@ -159,8 +150,8 @@ notifiarr:
 #  sonarr_path:
 #  plex_path:
 trakt:
-  client_id: ${TRAKT_CLIENT_ID:-####################}
-  client_secret: ${TRAKT_CLIENT_SECRET:-####################}
+  client_id: ${TRAKT_CLIENT_ID}
+  client_secret: ${TRAKT_CLIENT_SECRET}
   pin:
   authorization:
     # everything below is autofilled by the script
@@ -171,7 +162,10 @@ trakt:
     scope: public
     created_at:
 tmdb:
-  apikey:
+  apikey: ${TMDB_API_TOKEN}
+  language: en
+  region: US
+  cache_expiration: 60
 #tmdb:
 #  apikey:
 #mal:

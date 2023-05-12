@@ -1,13 +1,18 @@
 templates:
-    Franchise:
-        url_poster: <<poster>>
-        sort_title: +++++++_<<collection_name>>
-        collection_order: release
-        delete_not_scheduled: true
-        run_again: true
-        visible_home: true
-        visible_shared: true
-        sync_mode: sync
+  Franchise:
+    url_poster: <<poster>>
+    sort_title: +++++++_<<collection_name>>
+    collection_order: release
+    delete_not_scheduled: true
+    run_again: true
+    visible_home: true
+    visible_shared: true
+    sync_mode: sync
+    smart_label: random
+  Special Genre:
+    sort_title: "!C <<collection_name>>"
+    collection_order: alpha
+    collection_mode: hide
 collections:
   Marvel Cinematic Universe:
     template: {name: Franchise, poster: https://theposterdb.com/api/assets/162885}

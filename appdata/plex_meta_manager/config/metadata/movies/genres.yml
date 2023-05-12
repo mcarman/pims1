@@ -18,26 +18,26 @@
 #######################
 
 templates:
-    Dynamic:         # mapping name does not matter, just needs to be unique
-        smart_filter:
-          all:
-            genre: <<collection>>
-          sort_by: release.desc
-        url_poster: https://theposterdb.com/api/assets/<<poster>>
-        sort_title: ++++++++_<<collection_name>>
-        collection_mode: hide
-    Genre:
-        plex_search:
-          genre: <<genre>>
-        url_poster: https://theposterdb.com/api/assets/<<poster>>
-        sort_title: ++++++++_<<collection_name>>
-        collection_mode: hide
-        collection_order: release.desc
-    Special Genre:
-        url_poster: https://theposterdb.com/api/assets/<<poster>>
-        sort_title: ++++++++_<<collection_name>>
-        collection_mode: hide
-        collection_order: release.desc
+  Dynamic:         # mapping name does not matter, just needs to be unique
+    smart_filter:
+      all:
+        genre: <<collection>>
+      sort_by: release.desc
+    url_poster: https://theposterdb.com/api/assets/<<poster>>
+    sort_title: ++++++++_<<collection_name>>
+    collection_mode: hide
+  Genre:
+    plex_search:
+      genre: <<genre>>
+    url_poster: https://theposterdb.com/api/assets/<<poster>>
+    sort_title: ++++++++_<<collection_name>>
+    collection_mode: hide
+    collection_order: release.desc
+  Special Genre:
+    url_poster: https://theposterdb.com/api/assets/<<poster>>
+    sort_title: ++++++++_<<collection_name>>
+    collection_mode: hide
+    collection_order: release.desc
     # IMDB Genre: # Has been removed as Plex now includes these genres in it's list 
         # url_poster: https://theposterdb.com/api/assets/<<poster>>
         # sort_title: ++++++++_<<collection_name>>
@@ -45,20 +45,20 @@ templates:
         # collection_order: release
           # imdb_list: 
             # - "https://www.imdb.com/search/title/?title_type=movie&genres=<<title>>"
-    IMDB Special Genre: 
-        url_poster: https://theposterdb.com/api/assets/<<poster>>
-        sort_title: ++++++++_<<collection_name>>
-        collection_mode: hide
-        collection_order: release.desc
-        # imdb_list: 
-          # - url: "https://www.imdb.com/search/title/?title_type=movie&release_date=1990-01-01,&user_rating=5.0,10.0&num_votes=100000,&genres=<<genre>>"
-    IMDB Keyword:
-        url_poster: https://theposterdb.com/api/assets/<<poster>>
-        sort_title: ++++++++_<<collection_name>>
-        collection_mode: hide
-        collection_order: release.desc
-        # imdb_list: 
-          # - url: "https://www.imdb.com/search/keyword/?title_type=movie&keywords=<<genre>>"
+  IMDB Special Genre: 
+    url_poster: https://theposterdb.com/api/assets/<<poster>>
+    sort_title: ++++++++_<<collection_name>>
+    collection_mode: hide
+    collection_order: release.desc
+    # imdb_list: 
+      # - url: "https://www.imdb.com/search/title/?title_type=movie&release_date=1990-01-01,&user_rating=5.0,10.0&num_votes=100000,&genres=<<genre>>"
+  IMDB Keyword:
+    url_poster: https://theposterdb.com/api/assets/<<poster>>
+    sort_title: ++++++++_<<collection_name>>
+    collection_mode: hide
+    collection_order: release.desc
+    # imdb_list: 
+      # - url: "https://www.imdb.com/search/keyword/?title_type=movie&keywords=<<genre>>"
         
 #############################
 ##       Collections       ##

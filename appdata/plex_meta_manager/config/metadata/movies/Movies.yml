@@ -2,16 +2,33 @@
 #                       Movies                       #
 ######################################################
 templates:
+  Movies:
+    optional:
+      - collection
+      - tmdb_movie
+      - trakt_list
+      - tmdb_list
+    trakt_list_details: <<trakt_list>>
+    tmdb_collection_details: <<collection>>
+    tmdb_movie: <<tmdb_movie>>
+    tmdb_list: <<tmdb_list>>
+    sort_title: <<collection_name>>
+    collection_order: release
+    collections_mode: hide
   Chart:
     sort_title: +02_<<collection_name>>
     sync_mode: sync
+    smart_label: random
+    collection_mode: hide
   Series:
     sort_title: +03_<<collection_name>>
     sync_mode: sync
+    smart_label: random
   IMDb Series:
     sort_title: +03_<<collection_name>>
     imdb_list: https://www.imdb.com/list/<<IMDbList>>/
     sync_mode: sync
+    smart_label: random
 collections:
 ######################################################
 #                    Movie Charts                    #
@@ -38,7 +55,7 @@ collections:
       primary_release_date.lte: 12/31/1979
       with_original_language: en
       sort_by: popularity.desc
-      limit: 100
+      limit: 10
     summary: TMDB Most Popular Movies of the 1980s
   Best of the 1980s:
     template: {name: Chart}
@@ -47,7 +64,7 @@ collections:
       primary_release_date.lte: 12/31/1989
       with_original_language: en
       sort_by: popularity.desc
-      limit: 100
+      limit: 10
     summary: TMDB Most Popular Movies of the 1980s
   Best of the 1990s:
     template: {name: Chart}
@@ -56,7 +73,7 @@ collections:
       primary_release_date.lte: 12/31/1999
       with_original_language: en
       sort_by: popularity.desc
-      limit: 100
+      limit: 10
     summary: TMDB Most Popular Movies of the 1990s
   Best of the 2000s:
     template: {name: Chart}
@@ -65,7 +82,7 @@ collections:
       primary_release_date.lte: 12/31/2009
       with_original_language: en
       sort_by: popularity.desc
-      limit: 100
+      limit: 10
     summary: TMDB Most Popular Movies of the 2000s
   Best of the 2010s:
     template: {name: Chart}
@@ -74,7 +91,7 @@ collections:
       primary_release_date.lte: 12/31/2019
       with_original_language: en
       sort_by: popularity.desc
-      limit: 100
+      limit: 10
     summary: TMDB Most Popular Movies of the 2010s
   Best of the 2020s:
     template: {name: Chart}
@@ -83,7 +100,7 @@ collections:
       primary_release_date.lte: 12/31/2029
       with_original_language: en
       sort_by: popularity.desc
-      limit: 100
+      limit: 10
     summary: TMDB Most Popular Movies of the 2020s   
   Academy Award Winners:
     template: {name: Chart}
