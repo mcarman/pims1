@@ -1,33 +1,41 @@
 version: '3.9'
 
-###
+#####
 # Common Configs
-### 
+##### 
 x-environment: &tz-puid-pgid
   - TZ=${TZ:-Etc/UTC}
   - PUID=${PUID:-1000}
   - PGID=${PGID--1000}
-  - GUID=${GUID:-1000}
 
-
+#####
+# services section
+#####
 services:
+
 ###
 # Portainer - Manage docker contsainers and stack
 ###
   portainer:
     image: portainer/portainer-ce:linux-arm64-2.16.2-alpine
     container_name: portainer
-    restart: unless-stopped
+    hostname: portainer
     environment:
       - PUID=${PUID:-1000}
       - GUID=${GUID:-1000}
       - PGID=${PGID:-1000}
       - TZ=${TZ:-Etc/UTC}  
-    network_mode: host
+    networks:
+      - media_net
+    ports:
+      - "9000:9000"
+      - "9443:9443"
+      - "8000:8000"  
     volumes:
       - "/var/lib/docker:/var/lib/docker"
       - "portainer_data:/data"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    restart: unless-stopped
 
 ###
 # Plex- Media Server
@@ -35,7 +43,7 @@ services:
   plex:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
-    restart: unless-stopped
+    hostname: plex  
     environment:
       - PUID=${PUID:-1000}
       - GUID=${GUID:-1000}
@@ -45,16 +53,17 @@ services:
       - PLEX_CLAIM=${PLEX_CLAIM}
     network_mode: host
     volumes:
-      - "${MEDIA_DIR}/media/movies:/movies"
+      - "${MEDIA_DIR}/media/Movies:/movies"
       - "${MEDIA_DIR}/media/tv:/tv"
       - "/var/lib/docker:/var/lib/docker"
       - "plex_config:/config"
+    restart: unless-stopped
 
 ###
 # Plex Meta Manager - organize and present media
 ###
   plex_meta_manager:
-    image: "lscr.io/linuxserver/plex-meta-manager:latest"
+    image: lscr.io/linuxserver/plex-meta-manager:latest
     container_name: plex_meta_manager
     restart: unless-stopped
     network_mode: host
@@ -71,7 +80,6 @@ services:
       - PMM_TEST=${PMM_TEST:-False} #optional
       - PMM_NO_MISSING=${PMM_NO_MISSING:-False} #optional
     volumes:
-      - $APPDATA/plex_meta_manager/config/config.yml:/config/config.yml
       - $APPDATA/plex_meta_manager/config:/config
     command: -r
 
@@ -82,7 +90,6 @@ services:
     image: amir20/dozzle
     container_name: dozzle
     restart: unless-stopped
-    network_mode: host
     environment:
       - PUID=${PUID:-1000}
       - GUID=${GUID:-1000}
@@ -92,6 +99,8 @@ services:
       - DOZZLE_LEVEL=debug # info trace
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - media_net
     ports:
       - 8080:8080
  
@@ -101,21 +110,22 @@ services:
   tautulli:
     image: lscr.io/linuxserver/tautulli:latest
     container_name: tautulli
-    network_mode: host
+    hostname: tautulli
     depends_on:
       - plex
     environment:
+    #  &tz-puid-pgid
       - PUID=${PUID:-1000}
       - PGID=${GUID:-1000}
       - GUID=${GUID:-1000} 
       - TZ=${TZ:-Etc/UTC}
+    networks:
+      - media_net
     ports:
       - "8181:8181"
     volumes:
       - $APPDATA/tautulli/config:/config
       - $PLEX_LOGS:/plexlogs
-        # ports:
-        # - 8181:8181
     restart: unless-stopped
 
 ###
@@ -123,12 +133,13 @@ services:
 ###
   airsonic:
     image: lscr.io/linuxserver/airsonic-advanced:latest
-    network_mode: host
     volumes:
       - $MEDIA_DIR/media/audio:/music
       - $MEDIA_DIR/media/audio/playlists:/playlists
       - $MEDIA_DIR/media/podcasts:/podcasts
       - $APPDATA/airsonic/config:/config
+    networks:
+      - media_net
     ports:
       - 4040:80
     environment:
@@ -146,6 +157,8 @@ services:
   heimdall: 
     image: lscr.io/linuxserver/heimdall
     container_name: heimdall
+    networks:
+      - media_net
     ports:
       - 8010:80
       - 8443:443 
@@ -170,6 +183,8 @@ services:
     # Pass in your config file below, by specifying the path on your host machine
     volumes:
       - $APPDATA/dashy/public/config.yml:/app/public/conf.yml
+    networks: 
+      - media_net
     ports:
       - 4000:80
     environment:
@@ -186,10 +201,16 @@ services:
       retries: 3
       start_period: 40s
 
-####
-# network connectivity monitor
-####
+###
+# Smokeping network connectivity monitor
+###
   smokeping:
+    build:
+      context: ${DOCKER_DIR}/docfile/smokeping/
+      dockerfile: Dockerfile.smokeping
+      #args: 
+      #  BUILD_DATE:
+      #  VERSION:
     image: lscr.io/linuxserver/smokeping:latest
     container_name: smokeping
     hostname: smokeping
@@ -198,14 +219,51 @@ services:
       - PGID=${PGID:-1000}
       - TZ=${TZ:-Etc/UTC}
     volumes:
-      - $APPDATA/smokeping:/config
+      - $APPDATA/smokeping/config:/config
       - $MEDIA_DIR/appdata/smokeping/data:/data
+    networks:
+      - media_net
     ports:
-      - 84:80
+      - 780:80
     restart: unless-stopped
- 
+
 ###
-# Watchtoer to automate updates
+# Samba file share on windows and linux fs
+###
+  samba:
+    image: docker.io/brightopia/samba:latest 
+    #image: mdccarman/samba:4.0
+    #build:
+    #  context: ${DOCKER_DIR}/docfile/samba/
+    #  dockerfile: Dockerfile.samba
+      #args:
+      #  BUILD_DATE: 
+      #  VERSION:
+      #  VCS_REF:
+    # image_name: linuxcontainer/debian-slim:11.7
+    container_name: samba
+    hostname: samba
+    environment:
+      - USERID=${PUID:-1000}
+      - GROUPID=${PGID:-1000}
+      - TZ=${TZ:-Etc/UTC}
+    volumes:
+      - $APPDATA/samba/smb.conf:/etc/samba/smb.conf
+      - $MEDIA_DIR/media/:/mount/
+    networks:
+      - media_net
+    ports:
+      - "137:137/udp"
+      - "138:138/udp"
+      - "139:139"
+      - "145:145"
+    restart: unless_stopped
+
+    restart: unless-stopped
+
+
+###
+# Watchtower to automate updates
 ###
   watchtower:
     image: containrrr/watchtower:latest
@@ -219,40 +277,23 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 #    command: --interval 3600
 
+
 ###
-# Notifiarr - messaging for media server
+# cloudflare for dns
 ###
-  notifiarr:
-    container_name: notifiarr
-    hostname: notifiarr
-    image: golift/notifiarr
-    restart: unless-stopped
-    environment:
-      - PUID=${PUID:-1000}
-      - PGID=${PGID:-1000}
-      - TZ=${TZ:-Etc/UTC}
-      - DN_UI_PASSWORD=$DN_UI_PASSWORD
-      - DN_API_KEY=$NOTIFIARR_API_TOKEN
-      - DN_QUIET=false
-      - DN_LOG_FILE=$APPDATA/notifiarr/logs
-      - DN_LOG_FILES=3
-      # Plex info, add http://localhost:5454/plex?token=plex-token-here to plex
-      - DN_PLEX_URL=$DN_PLEX_URL 
-      - DN_PLEX_TOKEN=$PLEX_API_TOKEN
-      # tautulli variables
-      - DN_TAUTULLI_NAME=$DN_TAUTULLI_NAME
-      - DN_TAUTULLI_URL=$DN_TAUTULLI_URL
-      - DN_TAUTULLI_API_KEY=$TAUTULLI_API_TOKEN
-      - USER=$PUID
-    depends_on:
-      - tautulli
-      - plex
-    ports:
-      - "5454:5454"
-    volumes:
-      - ${APPDATA}/notifiarr/config:/config
-#      - /var/run/utmp:/var/run/utmp
-      - /etc/machine-id:/etc/machine-id
+#  cloudflare-ddns:
+#    image: oznu/cloudflare-ddns:latest
+#    restart: unless-stopped
+#    environment:
+#      - API_KEY=${CF_API_TOKEN]
+      # - ZONE=bret.dk
+#      - SUBDOMAIN=ddns
+#      - PROXIED=false 
+#      - PUID=${PUID:-1000}
+#      - PGID=${PGID:-1000}
+#      - TZ=${TZ:-Etc/UTC}
+#    networks:
+#      - media_net
 
 ####
 # System Volumes
@@ -263,9 +304,12 @@ volumes:
   portainer_data:
     external: true
   
-  ###
+  ####
   # Networks
-  ###
-  #networks:
-  #  default:
-  #    driver: bridge
+  ####
+networks:
+  media_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.1.0/24

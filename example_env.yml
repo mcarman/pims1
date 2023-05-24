@@ -2,7 +2,7 @@
 PUID=
 PGID=
 GUID=
-TZ=America/Denver
+TZ=
 DOCKER_DIR=<path to docker files e.g. ~/docker>
 MEDIA_DIR=<path to where you have the media files mounted
 
