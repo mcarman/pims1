@@ -1,10 +1,13 @@
-pageInfo:
-  title: Home Lab
 appConfig:
   theme: material-dark
   layout: auto
   iconSize: medium
   language: en
+pageInfo:
+  title: Home Lab
+  description: ''
+  navLinks: []
+  footerText: ''
 sections:
   - name: Productivity
     displayData:
@@ -29,7 +32,7 @@ sections:
       - title: SmokePing
         description: Network latency monitoring
         icon: img/icons/smokeping.jpg
-        url: http://10.0.0.223:84
+        url: http://10.0.0.223:8383
         target: newtab
         id: 0_861_smokeping
   - name: System Maintence
@@ -38,6 +41,7 @@ sections:
         description: Docker container management
         icon: img/icons/portainer.svg
         url: https://10.0.0.223:9443
+        target: newtab
         id: 0_1593_portainer
       - title: Glances
         description: Simple resource usage
@@ -46,25 +50,28 @@ sections:
       - title: Dozzle
         description: Docker container web log viewer
         icon: img/icons/dozzle.png
-        url: http://10.0.0.223:8080
+        url: http://10.0.0.223:8282
         target: newtab
         id: 2_1593_dozzle
+      - title: Watchtower
+        description: Automatic Image update service
+        id: 3_1593_watchtower
   - name: External Services
     items:
       - title: HealthChecks
         description: Cron Job Monitoring
-#        icon: img/icons/dashy-logo.png
         url: https://healthchecks.io/checks/
+        target: newtab
         id: 0_1703_healthchecks
       - title: ISP - Comcast
         description: Broadband internet provider
-#        icon: img/icons/cloudflare.svg
-        url: https://comcast.com/
-        id: 1_1703_ispcomcast
-      - title: Watchtower
-        description: Tool for password management
+        url: https://xfinity.com/
         target: newtab
-        id: 2_1703_watchtower
+        id: 1_1703_ispcomcast
+      - title: add
+        description: Automatic Updates
+        target: newtab
+        id: 2_1703_add
   - name: Media
     items:
       - title: Plex
@@ -114,7 +121,6 @@ sections:
       - title: Heimdall
         description: Alternative homepage
         url: http://10.0.0.223:8010
-#       icons: img/icons/plex.png
         target: newtab
         id: 3_1823_heimdall
   - name: International Time
