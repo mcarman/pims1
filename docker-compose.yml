@@ -389,3 +389,4 @@ networks:
           ip_range: "10.0.1.0/27" # ip range 10.0.0.10 to 10.0.0.42 bcast 10.0.0.41
           gateway: "10.0.1.1"
 
+# libavahi-common-dev 
