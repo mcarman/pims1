@@ -246,7 +246,8 @@ services:
     volumes:
       - $APPDATA/smokeping/config:/config
       - $MEDIA_DIR/appdata/smokeping/data:/data
-    networks: default
+    networks: 
+      - default
     security_opt:
       - no-new-privileges:true
     ports:
@@ -257,21 +258,21 @@ services:
 # Glances - resource monitoring
 ###
   glances:
-    image: nicolargo/glances:latest
+    image: nicolargo/glances:latest-full
     container_name: glances
+    restart: unless-stopped
     environment:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
       - TZ=${TZ:-Etc/UTC}
-      - GLANCES_OPT="-w"
-    networks: default
+      - "GLANCES_OPT=-w"
+    networks: 
+      - default
     ports:
       - "61208-61209:61208-61209"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    restart: "unless-stopped"
-    pid:
-      - host 
+    pid: "host" 
 
 ###
 # avahi to advertize the share to linux/mac
@@ -306,30 +307,30 @@ services:
 ###
 # Samba file share on windows and linux fs
 ###
-#  samba:
-#    image: servercontainers/samba:smbd-wsdd2-latest
-#    container_name: samba
-#    hostname: $HOSTNAME
-#    network_mode: host
-    #  - default
-#    security_opt:
-#      - no-new-privileges:true
-#    ports:
-#      - 445:445
-#      - 137:137
-#      - 138:138
-#      - 139:139
-#    volumes:
-#      - $APPDATA/samba2/data:/data
-#      - $APPDATA/samba2/etc/smb.conf:/etc/samba/smb.conf
-#      - $MEDIA_DIR/media:/data/share
-#    environment:
-#      - "TZ=${TZ:-Etc/UTC}"
-#      - "SAMBA_LOG_LEVEL=0"
-#      - "PUID=${PUID:-1000}"
-#      - "PGID=${PGID:-1000}"
-#    restart: unless-stopped
- #   
+  samba:
+    image: pwntr/samba-local
+    container_name: samba
+    hostname: $HOSTNAME
+    networks:
+      - default
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - 445:445
+      - 137:137
+      - 138:138
+      - 139:139
+    volumes:
+      - $APPDATA/samba/shared:/shared
+      - $APPDATA/samba/config:/config
+      - $MEDIA_DIR/media:/shared/media
+    environment:
+      - "TZ=${TZ:-Etc/UTC}"
+    #
+    #  - "PUID=${PUID:-1000}"
+    restart: unless-stopped
+
+   
   ###
   # wsdd to advertize name to the network for samba
   ###
@@ -339,8 +340,7 @@ services:
 #      context: $DOCKER_DIR/docfile/wsdd
 #      dockerfile: Dockerfile.wsdd  
 #    networks:
-#      media_net:
-##        ipv4_address: "10.0.0.13"
+#      - default
 #    environment:
 #      - "HOSTNAME=$HOSTNAME"
 #    restart: unless-stopped
