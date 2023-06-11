@@ -209,7 +209,7 @@ UUID
 #tautulli
 config.ini
 tautulli/config/cache/*.*
-tautulli/backups
+tautulli/config/backups
 tautulli/config/logs/*.*
 
 # General items 
