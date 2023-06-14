@@ -219,10 +219,11 @@ tautulli/config/logs/*.*
 # Airsonic logs 
 appdata/airsonic/config/*.gz
 appdata/airsonic/config/thumbs
+appdata/airsonic/db/airsonic.lck
 
 # samba
 appdata/samba/config/log/samba.log
 
 # plex meta manager
 
-appdata/plex_meta_manager/logs/meta.*
+appdata/plex_meta_manager/config/logs/meta.*
