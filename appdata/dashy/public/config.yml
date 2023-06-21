@@ -14,8 +14,8 @@ sections:
       collapsed: false
       cols: 1
       sortBy: default
-      rows: 2
-      hideForGuests: true
+      rows: 3
+      hideForGuests: false
     items:
       - title: Syncthing
         description: Peer-to-peer file synchronization
@@ -41,7 +41,6 @@ sections:
         description: Docker container management
         icon: img/icons/portainer.svg
         url: https://10.0.0.223:9443
-        target: newtab
         id: 0_1593_portainer
       - title: Glances
         description: Simple resource usage
@@ -50,28 +49,23 @@ sections:
       - title: Dozzle
         description: Docker container web log viewer
         icon: img/icons/dozzle.png
-        url: http://10.0.0.223:8282
+        url: http://10.0.0.223:8080
         target: newtab
         id: 2_1593_dozzle
-      - title: Watchtower
-        description: Automatic Image update service
-        id: 3_1593_watchtower
   - name: External Services
     items:
       - title: HealthChecks
         description: Cron Job Monitoring
         url: https://healthchecks.io/checks/
-        target: newtab
         id: 0_1703_healthchecks
       - title: ISP - Comcast
         description: Broadband internet provider
-        url: https://xfinity.com/
-        target: newtab
+        url: https://comcast.com/
         id: 1_1703_ispcomcast
-      - title: add
-        description: Automatic Updates
+      - title: Watchtower
+        description: Tool for password management
         target: newtab
-        id: 2_1703_add
+        id: 2_1703_watchtower
   - name: Media
     items:
       - title: Plex

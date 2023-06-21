@@ -222,7 +222,7 @@ services:
     # Configure healthchecks
     healthcheck:
       test: ['CMD', 'node', '/app/services/healthcheck']
-      interval: 1m30s
+      interval: 5m30s
       timeout: 10s
       retries: 3
       start_period: 40s
@@ -280,8 +280,11 @@ services:
   avahi:
     image: ydkn/avahi
     container_name: "avahi"
-    networks:
-      - default
+    network_mode: host
+    #networks:
+    #  - default
+    #ports:
+    #  - 5353:5353  
     security_opt:
       - no-new-privileges:true
     volumes:
@@ -311,15 +314,12 @@ services:
     image: pwntr/samba-local
     container_name: samba
     hostname: $HOSTNAME
-    networks:
-      - default
+    network_mode: host
+    #  - default
     security_opt:
       - no-new-privileges:true
     ports:
       - 445:445
-      - 137:137
-      - 138:138
-      - 139:139
     volumes:
       - $APPDATA/samba/shared:/shared
       - $APPDATA/samba/config:/config
@@ -335,35 +335,46 @@ services:
   ###
   # wsdd to advertize name to the network for samba
   ###
-#  wsdd:
-#    image: jonasped/wsdd
-#    build:
-#      context: $DOCKER_DIR/docfile/wsdd
-#      dockerfile: Dockerfile.wsdd  
-#    networks:
-#      - default
-#    environment:
-#      - "HOSTNAME=$HOSTNAME"
-#    restart: unless-stopped
-
-
+  wsdd:
+    image: dpvduncan/wsdd
+    #build:
+    #  context: $DOCKER_DIR/docfile/wsdd
+    #  dockerfile: Dockerfile.wsdd  
+    container_name: wsdd
+    depends_on:
+      - samba
+    network_mode: host
+    environment:
+      - "HOSTNAME=${HOSTNAME:-Samba_Server}"
+    #  - PUID = ${PUID:-1000}
+    #  - GUID = ${GUID:-1000}
+      - TZ = ${TZ:-Etc/UTC}
+    volumes:
+      - "$APPDATA/samba/config/smb.conf:/etc/samba/smb.conf"
+      - "$APPDATA/samba/config/log/samba.log:/usr/local/samba/var/samba.log"
+    restart: unless-stopped
+    networks:
+      - default
+    ports: 
+      - 3702:3702
+      - 5357:5357
 
 ###
 # cloudflare for dns
 ###
 #  cloudflare-ddns:
-#    image: oznu/cloudflare-ddns:latest
+#    image: cloudflare/cloudflared:latest
 #    restart: unless-stopped
 #    environment:
 #      - API_KEY=${CF_API_TOKEN]
-      # - ZONE=bret.dk
+#      - ZONE=crmnfmly
 #      - SUBDOMAIN=ddns
 #      - PROXIED=false 
 #      - PUID=${PUID:-1000}
 #      - PGID=${PGID:-1000}
 #      - TZ=${TZ:-Etc/UTC}
 #    networks:
-#      - media_net
+#      - default
 
 ####
 # System Volumes

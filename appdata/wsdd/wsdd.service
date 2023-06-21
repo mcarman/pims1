@@ -4,10 +4,12 @@ Documentation=man:wsdd(8)
 ; Start after the network has been configured
 After=network.target
 Wants=network.target
-; It makes sense to have Samba running when wsdd starts, but is not required.
+; It makes sense to have Samba running when wsdd starts, 
+; but is not required.
 ; Thus, the next to lines are disabled and use BindsTo only.
-; One may also add any of these services to After for stronger binding.
-;BindsTo=smb.service
+; One may also add any of these services to After for 
+; stronger binding.
+BindsTo=smb.service
 ;BindsTo=samba.service
 
 [Service]
