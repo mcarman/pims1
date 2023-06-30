@@ -216,11 +216,17 @@ tautulli/config/logs/*.*
 *.key
 *.crt 
 
+#
+docfile/wsdd2/*.*
+docfile/wsdd2/debian/*.*
+docfile/wsdd2/debian/source/*.*
+
+
 # Airsonic logs 
 appdata/airsonic/config/*.gz
 appdata/airsonic/config/thumbs
 appdata/airsonic/db/airsonic.lck
-
+*.lck
 # samba
 appdata/samba/config/log/samba.log
 
