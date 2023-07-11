@@ -305,9 +305,12 @@ services:
     #    image: jonasped/wsdd
     #    container_name: "wsdd"
     #    hostname: $HOSTNAME
+    #    build:
+    #      context: 
     #    network_mode: host
     #    environment:
     #      - "WORKGROUP = ${SAMBA_WORKGROUP:-WORKGROUP}"
+    #      - BUILD_DATE=${DATE}
     #    depends_on: samba
     #   restart: unless-stopped
 
