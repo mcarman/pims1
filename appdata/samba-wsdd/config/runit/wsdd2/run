@@ -1,3 +1,0 @@
-#!/bin/sh -x
-sleep 10
-exec /usr/sbin/wsdd2

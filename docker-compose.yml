@@ -3,7 +3,8 @@ version: '3.9'
 #####
 # Common Configs
 ##### 
-x-environment: &tz-puid-pgid
+x-environment:
+  &tz-puid-pgid
   - TZ=${TZ:-Etc/UTC}
   - PUID=${PUID:-1000}
   - PGID=${PGID--1000}
@@ -13,9 +14,9 @@ x-environment: &tz-puid-pgid
 #####
 services:
 
-###
-# Portainer - Manage docker contsainers and stack
-###
+  ###
+  # Portainer - Manage docker contsainers and stack
+  ###
   portainer:
     image: portainer/portainer-ce:linux-arm64-2.16.2-alpine
     container_name: portainer
@@ -23,7 +24,7 @@ services:
     environment:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
-      - TZ=${TZ:-Etc/UTC}  
+      - TZ=${TZ:-UTC}
     networks:
       - default
     security_opt:
@@ -31,23 +32,23 @@ services:
     ports:
       - "9000:9000"
       - "9443:9443"
-      - "8000:8000"  
+      - "8000:8000"
     volumes:
       - "/var/lib/docker:/var/lib/docker"
       - "portainer_data:/data"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     restart: unless-stopped
 
-###
-# Plex- Media Server
-###  
+  ###
+  # Plex- Media Server
+  ###  
   plex:
     image: lscr.io/linuxserver/plex:latest
-    container_name: plex  
-    environment: 
+    container_name: plex
+    environment:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
-      - TZ=${TZ:-Etc/UTC}
+      - TZ=${TZ:-UTC}
       - VERSION=docker
       - PLEX_CLAIM=${PLEX_CLAIM}
       # - advertize IP
@@ -72,9 +73,9 @@ services:
       - "plex_config:/config"
     restart: unless-stopped
 
-###
-# Plex Meta Manager - organize and present media
-###
+  ###
+  # Plex Meta Manager - organize and present media
+  ###
   plex_meta_manager:
     image: lscr.io/linuxserver/plex-meta-manager:latest
     container_name: plex_meta_manager
@@ -88,7 +89,7 @@ services:
     environment:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
-      - TZ=${TZ:-Etc/UTC}
+      - TZ=${TZ:-UTC}
       - GUID=${GUID:-1000}
       - PMM_CONFIG=${PMM_CONFIG:-/config/config.yml} #optional
       - PMM_TIME=${PMM_TIME:-03:00} #optional
@@ -99,32 +100,9 @@ services:
       - $APPDATA/plex_meta_manager/config:/config
     command: -r
 
-###
-# dozzle, unified log interface
-###
-  dozzle:
-    image: amir20/dozzle
-    container_name: dozzle
-    restart: unless-stopped
-    environment:
-      - PUID=${PUID:-1000}
-      - GUID=${GUID:-1000}
-      - PGID=${PGID:-1000}
-      - TZ=${TZ:-Etc/UTC}
-      - DOZZLE_TAILSIZE=300
-      - DOZZLE_LEVEL=debug # info trace
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    networks:
-      - default
-    security_opt:
-      - no-new-privileges:true
-    ports:
-      - 8282:8080
- 
-###
-#  tautulli - Utilities for Plex
-###  
+  ###
+  #  tautulli - Utilities for Plex
+  ###  
   tautulli:
     image: lscr.io/linuxserver/tautulli:latest
     container_name: tautulli
@@ -132,11 +110,11 @@ services:
     depends_on:
       - plex
     environment:
-    #  &tz-puid-pgid
+      #  &tz-puid-pgid
       - PUID=${PUID:-1000}
       - PGID=${GUID:-1000}
-      - GUID=${GUID:-1000} 
-      - TZ=${TZ:-Etc/UTC}
+      - GUID=${GUID:-1000}
+      - TZ=${TZ:-UTC}
     networks:
       - default
     security_opt:
@@ -148,9 +126,9 @@ services:
       - $PLEX_LOGS:/plexlogs
     restart: unless-stopped
 
-###
-# Airsonic advanced
-###
+  ###
+  # Airsonic advanced
+  ###
   airsonic:
     image: lscr.io/linuxserver/airsonic-advanced:latest
     container_name: airsonic
@@ -168,38 +146,33 @@ services:
     environment:
       - PUID=${PUID:-1000}
       - PGID=${GUID:-1000}
-      - TZ=${TZ:-Etc/UTC}
-    #   JAVA_OPTS: '-Dserver.forward-headers-strategy=native' # optional - if you use a reverse-proxy
+      - TZ=${TZ:-UTC}
     restart: unless-stopped
-#    device:
-#      - /dev/snd
 
-###
-# Heimdall homepage with links to all apps
-###
-  heimdall: 
+  ###
+  # Heimdall homepage with links to all apps
+  ###
+  heimdall:
     image: lscr.io/linuxserver/heimdall
     container_name: heimdall
+    hostname: $HOSTNAME
     networks:
       - default
     security_opt:
       - no-new-privileges:true
     ports:
       - 80:80
-      - 443:443 
+      - 443:443
     volumes:
       - $APPDATA/heimdall/config:/config
     environment:
-      - PUID=${PUID:-1000}
-      - PGID=${PGID:-1000}
-      - TZ=${TZ:-Etc/UTC}
+      - PUID=${PUID:-1000} PGID=${PGID:-1000}
+      - TZ=${TZ:-UTC}
     restart: unless-stopped
-    #networks:
-    #  - default
 
-###
-# Dashy alternative to heimdall
-###
+  ###
+  # Dashy alternative to heimdall
+  ###
   dashy:
     # To build from source, replace 'image: lissy93/dashy' with 'build: .'
     # build: .
@@ -221,15 +194,15 @@ services:
     restart: unless-stopped
     # Configure healthchecks
     healthcheck:
-      test: ['CMD', 'node', '/app/services/healthcheck']
+      test: [ 'CMD', 'node', '/app/services/healthcheck' ]
       interval: 5m30s
       timeout: 10s
       retries: 3
       start_period: 40s
 
-###
-# Smokeping network connectivity monitor
-###
+  ###
+  # Smokeping network connectivity monitor
+  ###
   smokeping:
     build:
       context: ${DOCKER_DIR}/docfile/smokeping/
@@ -239,14 +212,15 @@ services:
       #  VERSION:
     image: lscr.io/linuxserver/smokeping:latest
     container_name: smokeping
+    hostname: $HOSTNAME
     environment:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
-      - TZ=${TZ:-Etc/UTC}
+      - TZ=${TZ:-UTC}
     volumes:
       - $APPDATA/smokeping/config:/config
       - $MEDIA_DIR/appdata/smokeping/data:/data
-    networks: 
+    networks:
       - default
     security_opt:
       - no-new-privileges:true
@@ -254,46 +228,106 @@ services:
       - 8383:80
     restart: unless-stopped
 
-###
-# Glances - resource monitoring
-###
+  ###
+  # Glances - resource monitoring
+  ###
   glances:
     image: nicolargo/glances:latest-full
     container_name: glances
+    hostname: $HOSTNAME
     restart: unless-stopped
     environment:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
-      - TZ=${TZ:-Etc/UTC}
+      - TZ=${TZ:-UTC}
       - "GLANCES_OPT=-w"
-    networks: 
+    networks:
       - default
     ports:
       - "61208-61209:61208-61209"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    pid: "host" 
+    pid: "host"
 
-###
-# avahi to advertize the share to linux/mac
-###
+  ###
+  # dozzle, unified log interface
+  ###
+  dozzle:
+    image: amir20/dozzle
+    hostname: $HOSTNAME
+    container_name: dozzle
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID:-1000}
+      - GUID=${GUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-UTC}
+      - DOZZLE_TAILSIZE=300
+      - DOZZLE_LEVEL=debug # info trace
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - default
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - 8282:8080
+
+  ###
+  # Samba file share on windows and linux fs
+  ###
+  samba:
+    build:
+      context: $APPDATA/samba-pwntr
+      dockerfile: Dockerfile
+      args:
+        BUILD_DATE: $DATE
+      #  VERSION:
+    image: pwntr/samba
+    container_name: samba
+    hostname: $HOSTNAME
+    network_mode: host
+    volumes:
+      - "$APPDATA/samba-pwntr/config:/config"
+      - "$MEDIA_DIR/media:/shares/media"
+      - "$MEDIA_DIR/media/mdc:/shares/media/mdc"
+      - "$MEDIA_DIR/:/shares"
+    environment:
+      - "TZ=${TZ:-UTC}"
+      - SAMBA_PASSWD=$SAMBA_PASSWD
+      - SAMBA_USER=$SAMBA_USER
+      - SAMBA_GROUP=$SAMBA_GROUP
+    restart: unless-stopped
+    ###
+    # wsdd to advertize name to the network for samba
+    ###
+    #  wsdd:
+    #    image: jonasped/wsdd
+    #    container_name: "wsdd"
+    #    hostname: $HOSTNAME
+    #    network_mode: host
+    #    environment:
+    #      - "WORKGROUP = ${SAMBA_WORKGROUP:-WORKGROUP}"
+    #    depends_on: samba
+    #   restart: unless-stopped
+
+    ###
+    # avahi to advertize the share to linux/mac
+    ###
   avahi:
     image: ydkn/avahi
     container_name: "avahi"
     network_mode: host
-    #networks:
-    #  - default
-    #ports:
-    #  - 5353:5353  
-    security_opt:
-      - no-new-privileges:true
+    hostname: $HOSTNAME
     volumes:
-      - $APPDATA/avahi/services:/etc/avahi/services:ro
+      - $APPDATA/avahi/services/smb.service:/etc/avahi/services/smb.service:ro
+    depends_on:
+      - samba
     restart: unless-stopped
 
-###
-# Watchtower to automate updates
-###
+  ###
+  # Watchtower to automate updates
+  ###
   watchtower:
     image: containrrr/watchtower:latest
     container_name: watchtower
@@ -301,63 +335,10 @@ services:
     environment:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
-      - TZ=${TZ:-Etc/UTC}
+      - TZ=${TZ:-UTC}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 #    command: --interval 3600
-
-
-###
-# Samba file share on windows and linux fs
-###
-  samba:
-    image: pwntr/samba-local
-    container_name: samba
-    hostname: $HOSTNAME
-    network_mode: host
-    #  - default
-    security_opt:
-      - no-new-privileges:true
-    ports:
-      - 445:445
-    volumes:
-      - $APPDATA/samba/shared:/shared
-      - $APPDATA/samba/config:/config
-      - $APPDATA/samba/config/smb.conf:/etc/samba/smb.conf
-      - $MEDIA_DIR/media:/shared/media
-    environment:
-      - "TZ=${TZ:-Etc/UTC}"
-    #
-    #  - "PUID=${PUID:-1000}"
-    restart: unless-stopped
-
-   
-  ###
-  # wsdd to advertize name to the network for samba
-  ###
-  wsdd:
-    image: dpvduncan/wsdd
-    #build:
-    #  context: $DOCKER_DIR/docfile/wsdd
-    #  dockerfile: Dockerfile.wsdd  
-    container_name: wsdd
-    depends_on:
-      - samba
-    network_mode: host
-    environment:
-      - "HOSTNAME=${HOSTNAME:-Samba_Server}"
-    #  - PUID = ${PUID:-1000}
-    #  - GUID = ${GUID:-1000}
-      - TZ = ${TZ:-Etc/UTC}
-    volumes:
-      - "$APPDATA/samba/config/smb.conf:/etc/samba/smb.conf"
-      - "$APPDATA/samba/config/log/samba.log:/usr/local/samba/var/samba.log"
-    restart: unless-stopped
-    networks:
-      - default
-    ports: 
-      - 3702:3702
-      - 5357:5357
 
 ###
 # cloudflare for dns
@@ -384,13 +365,14 @@ volumes:
     external: true
   portainer_data:
     external: true
-  
+
 ####
 # Networks 
 ####
 networks:
   default:
     driver: bridge
+
 #  media_net:
 #    driver: macvlan
 #    driver_opts:

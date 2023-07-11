@@ -1,3 +1,0 @@
-#!/bin/sh -x
-sleep 2
-exec smbd --foreground

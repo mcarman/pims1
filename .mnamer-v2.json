@@ -1,8 +1,7 @@
 {
-  -b,
-  -r,
-  -v,
-  --movie-api=tmdb,
-  --movie-format: {name} ({year}){extension}
-
+  "-b",
+  "-r",
+  "-v",
+  "--movie-api": "tmdb",
+  "--movie-format": "{name} ({year}).{extension}"
 }

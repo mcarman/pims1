@@ -4,10 +4,10 @@ appConfig:
   iconSize: medium
   language: en
 pageInfo:
-  title: Home Lab
-  description: ''
+  title: BAC Media Server
+  description: 'Plex Media Server and Support Apps running on a Pi 4B'
   navLinks: []
-  footerText: ''
+  footerText: 'BAC PIMS'
 sections:
   - name: Productivity
     displayData:
@@ -28,6 +28,12 @@ sections:
         icon: img/icons/dashy-logo.png
         id: 0_822_netdata
   - name: Networks
+    displayData:
+      collapsed: false
+      cols: 1
+      sortBy: default
+      rows: 3
+      hideForGuests: false
     items:
       - title: SmokePing
         description: Network latency monitoring
@@ -36,6 +42,12 @@ sections:
         target: newtab
         id: 0_861_smokeping
   - name: System Maintence
+    displayData:
+      collapsed: false
+      cols: 1
+      sortBy: default
+      rows: 4
+      hideForGuests: false
     items:
       - title: Portainer
         description: Docker container management
@@ -45,6 +57,7 @@ sections:
       - title: Glances
         description: Simple resource usage
         icon: img/icons/dashy-logo.png
+        url: https://10.0.0.223:61208
         id: 1_1593_glances
       - title: Dozzle
         description: Docker container web log viewer
@@ -52,7 +65,18 @@ sections:
         url: http://10.0.0.223:8080
         target: newtab
         id: 2_1593_dozzle
+      - title: Heimdall
+        description: Alternative homepage
+        url: http://10.0.0.223:8010
+        target: newtab
+        id: 3_1593_heimdall        
   - name: External Services
+    displayData:
+      collapsed: false
+      cols: 1
+      sortBy: default
+      rows: 3
+      hideForGuests: false
     items:
       - title: HealthChecks
         description: Cron Job Monitoring
@@ -66,7 +90,13 @@ sections:
         description: Tool for password management
         target: newtab
         id: 2_1703_watchtower
-  - name: Media
+  - name: Media Server
+    displayData:
+      collapsed: false
+      cols: 1
+      sortBy: default
+      rows: 4
+      hideForGuests: false
     items:
       - title: Plex
         description: Self-Hosted Media Streaming Service
@@ -96,7 +126,7 @@ sections:
     displayData:
       collapsed: true
       sortBy: default
-      rows: 1
+      rows: 3
       cols: 1
       hideForGuests: false
     items:
@@ -112,17 +142,12 @@ sections:
         description: Upload + download speeds and latency
         url: https://speed.cloudflare.com/
         id: 2_1823_speedtest
-      - title: Heimdall
-        description: Alternative homepage
-        url: http://10.0.0.223:8010
-        target: newtab
-        id: 3_1823_heimdall
-  - name: International Time
+  - name: Time Zones
     icon: fad fa-clock
     widgets:
       - type: clock
         options:
-          timeZone: UTC/UTC
+          timeZone: UTC
           format: en-US
         id: 0_1799_clock
       - type: clock
